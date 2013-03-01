@@ -8,19 +8,11 @@ namespace MFDMInterface
 {
     class StageAxis
     {
-        private List<StageSerialCom> SerialComms;
+        protected StageSerialCom SerialComm;
 
-        public StageAxis(List<string> comPorts)
+        public StageAxis(StageSerialCom comm)
         {
-            foreach (string com in comPorts)
-            {
-                SerialComms.Add(new StageSerialCom(com));
-            }
-        }
-
-        public void Move(int uM)
-        {
-            throw new Exception("Move not overridden");
+            SerialComm = comm;
         }
     }
 }

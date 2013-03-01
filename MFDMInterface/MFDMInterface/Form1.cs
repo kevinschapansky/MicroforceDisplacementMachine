@@ -12,9 +12,16 @@ namespace MFDMInterface
 {
     public partial class Form1 : Form
     {
+        private StageController MovementController;
         public Form1()
         {
             InitializeComponent();
+            MovementController = new StageController();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

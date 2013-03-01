@@ -56,6 +56,11 @@
     <Compile Include="StageController.cs" />
     <Compile Include="StageSerialCom.cs" />
     <Compile Include="XAxis.cs" />
+    <Compile Include="YAxis.cs" />
+    <Compile Include="ZAxis.cs" />
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
