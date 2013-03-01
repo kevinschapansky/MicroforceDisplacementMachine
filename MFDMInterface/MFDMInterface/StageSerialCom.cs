@@ -18,7 +18,12 @@ namespace MFDMInterface
         {
             StagePort = new SerialPort(comPort);
             StagePort.BaudRate = BAUD;
-            //StagePort.Parity = 
+            StagePort.Parity = Parity.None;
+            StagePort.DataBits = 8;
+            StagePort.StopBits = StopBits.None;
+            StagePort.Handshake = Handshake.XOnXOff;
+
+            StagePort.Open();
         }
     }
 }
