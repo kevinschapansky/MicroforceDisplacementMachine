@@ -42,6 +42,10 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="TIS.Imaging.ICImagingControl32, Version=3.2.4.1336, Culture=neutral, PublicKeyToken=257805929e8b7928, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Common Files\IC Imaging Control 3.2\bin\v4.0.30319\x86\TIS.Imaging.ICImagingControl32.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Form1.cs">

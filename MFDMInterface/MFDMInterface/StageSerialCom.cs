@@ -10,7 +10,7 @@ namespace MFDMInterface
 {
     class StageSerialCom
     {
-        static const int BAUD = 19200;
+        const int BAUD = 19200;
 
         SerialPort StagePort;
 

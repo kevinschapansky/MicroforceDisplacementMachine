@@ -16,12 +16,52 @@ namespace MFDMInterface
         public Form1()
         {
             InitializeComponent();
-            MovementController = new StageController();
+            //MovementController = new StageController();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+            if (!icImagingControl1.DeviceValid)
+            {
+                icImagingControl1.ShowDeviceSettingsDialog();
+
+                if (!icImagingControl1.DeviceValid)
+                {
+                    MessageBox.Show("No device was selected.", "Grabbing an Image",
+                                     MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    this.Close();
+                }
+                int width = icImagingControl1.Width;
+                int height = icImagingControl1.Height;
+
+                icImagingControl1.LiveStart();
+                icImagingControl1.OverlayBitmap.Enable = true;
+                icImagingControl1.OverlayBitmap.ColorMode = TIS.Imaging.OverlayColorModes.Color;
+                icImagingControl1.OverlayBitmap.DrawLine(Color.Red,width / 2 - 10, height / 2, width / 2 + 10, height / 2);
+                icImagingControl1.OverlayBitmap.DrawLine(Color.Red, width / 2, height / 2 - 10, width / 2, height / 2 + 10);
+            }
+        }
+
+        private void LeftButton_Click(object sender, EventArgs e)
         {
 
         }
+
+        private void UpButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void RightButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void DownButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
     }
 }
