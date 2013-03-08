@@ -27,11 +27,24 @@ namespace MFDMInterface
 
             SendCommand(1, "SN", 3);
             SendCommand(2, "SN", 3);
+            SetResolution(1, 10);
+            SetResolution(2, 10);
+            SetMaxVelocity(1, 100);
+            SetMaxVelocity(2, 100);
+            SetVelocity(1, 100);
+            SetVelocity(2, 100);
+            SetAcceleration(1, 50);
+            SetAcceleration(2, 50);
         }
 
         public void SendCommand(int stageNum, string command, int setting)
         {
             StagePort.Write(stageNum + command + setting + "\r");
+        }
+
+        public void SetMaxVelocity(int stageNum, int maxVelocity)
+        {
+            SendCommand(stageNum, "VU", maxVelocity);
         }
 
         public void SetVelocity(int stageNum, int velocity)

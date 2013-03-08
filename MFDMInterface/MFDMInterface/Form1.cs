@@ -16,7 +16,7 @@ namespace MFDMInterface
         public Form1()
         {
             InitializeComponent();
-            //MovementController = new StageController();
+            MovementController = new StageController();
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -34,7 +34,8 @@ namespace MFDMInterface
                 }
                 int width = icImagingControl1.Width;
                 int height = icImagingControl1.Height;
-
+                icImagingControl1.LiveDisplayWidth = 326;
+                icImagingControl1.LiveDisplayHeight = 228;
                 icImagingControl1.LiveStart();
                 icImagingControl1.OverlayBitmap.Enable = true;
                 icImagingControl1.OverlayBitmap.ColorMode = TIS.Imaging.OverlayColorModes.Color;
@@ -45,22 +46,22 @@ namespace MFDMInterface
 
         private void LeftButton_Click(object sender, EventArgs e)
         {
-
+            MovementController.XNegative();
         }
 
         private void UpButton_Click(object sender, EventArgs e)
         {
-
+            MovementController.YPositive();
         }
 
         private void RightButton_Click(object sender, EventArgs e)
         {
-
+            MovementController.XPositive();
         }
 
         private void DownButton_Click(object sender, EventArgs e)
         {
-
+            MovementController.YNegative();
         }
 
     }
