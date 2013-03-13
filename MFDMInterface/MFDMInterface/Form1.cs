@@ -34,13 +34,14 @@ namespace MFDMInterface
                 }
                 int width = icImagingControl1.Width;
                 int height = icImagingControl1.Height;
-                icImagingControl1.LiveDisplayWidth = 326;
-                icImagingControl1.LiveDisplayHeight = 228;
-                icImagingControl1.LiveStart();
+                icImagingControl1.LiveDisplayDefault = false;
+                icImagingControl1.LiveDisplayHeight = icImagingControl1.Height;
+                icImagingControl1.LiveDisplayWidth = icImagingControl1.Width;
                 icImagingControl1.OverlayBitmap.Enable = true;
                 icImagingControl1.OverlayBitmap.ColorMode = TIS.Imaging.OverlayColorModes.Color;
                 icImagingControl1.OverlayBitmap.DrawLine(Color.Red,width / 2 - 10, height / 2, width / 2 + 10, height / 2);
                 icImagingControl1.OverlayBitmap.DrawLine(Color.Red, width / 2, height / 2 - 10, width / 2, height / 2 + 10);
+                icImagingControl1.LiveStart();
             }
         }
 
@@ -63,6 +64,41 @@ namespace MFDMInterface
         {
             MovementController.YNegative();
         }
+
+        private void FUp_Click(object sender, EventArgs e)
+        {
+            MovementController.YFPositive();
+        }
+
+        private void FRight_Click(object sender, EventArgs e)
+        {
+            MovementController.XFPositive();
+        }
+
+        private void FDown_Click(object sender, EventArgs e)
+        {
+            MovementController.YFNegative();
+        }
+
+        private void FLeft_Click(object sender, EventArgs e)
+        {
+            MovementController.XFNegative();
+        }
+
+        private void sldZoom_Scroll(object sender, EventArgs e)
+        {
+            if (icImagingControl1.LiveDisplayDefault == false)
+            {
+                icImagingControl1.LiveDisplayZoomFactor = (float)sldZoom.Value / 10.0f;
+                lblZoomPercent.Text = (sldZoom.Value * 10).ToString() + "%";
+                icImagingControl1.LiveDisplayPosition = new Point(icImagingControl1.LiveDisplayWidth / 2, icImagingControl1.LiveDisplayHeight / 2);
+            }
+            else
+            {
+                MessageBox.Show("The zoom factor can only be set" + "\n" + "if LiveDisplayDefault returns False!");
+            }
+        }
+
 
     }
 }

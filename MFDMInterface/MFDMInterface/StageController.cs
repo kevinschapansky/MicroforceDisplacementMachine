@@ -9,7 +9,7 @@ namespace MFDMInterface
     class StageController
     {
         public static string XPort = "COM4";
-        public static string YZPort = "COM3";
+        public static string YZPort = "COM5";
 
         public static int XLChannel = 2;
         public static int XRChannel = 1;
@@ -28,6 +28,18 @@ namespace MFDMInterface
             set { YRes = value; }
         }
 
+        public int XFResolution
+        {
+            get { return XFRes; }
+            set { XFRes = value; }
+        }
+
+        public int YFResolution
+        {
+            get { return YFRes; }
+            set { YFRes = value; }
+        }
+
         StageSerialCom XCommunicator;
         StageSerialCom YZCommunicator;
 
@@ -35,8 +47,11 @@ namespace MFDMInterface
         private YAxis YAxisController;
         private ZAxis ZAxisController;
 
-        private int XRes = 1000;
-        private int YRes = 100;
+        private int XRes = 3000;
+        private int YRes = 3000;
+
+        private int XFRes = 28275;
+        private int YFRes = 28275;
 
         public StageController()
         {
@@ -50,12 +65,12 @@ namespace MFDMInterface
 
         public void XNegative()
         {
-            XAxisController.Move(XResolution);
+            XAxisController.Move(-1 * XResolution);
         }
 
         public void XPositive()
         {
-            XAxisController.Move(-1 * XResolution);
+            XAxisController.Move(XResolution);
         }
 
         public void YNegative()
@@ -66,6 +81,26 @@ namespace MFDMInterface
         public void YPositive()
         {
             YAxisController.Move(YResolution);
+        }
+
+        public void XFNegative()
+        {
+            XAxisController.Move(-1 * XFResolution);
+        }
+
+        public void XFPositive()
+        {
+            XAxisController.Move(XFResolution);
+        }
+
+        public void YFNegative()
+        {
+            YAxisController.Move(-1 * YFResolution);
+        }
+
+        public void YFPositive()
+        {
+            YAxisController.Move(YFResolution);
         }
     }
 }

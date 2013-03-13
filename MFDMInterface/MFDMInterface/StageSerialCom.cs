@@ -25,16 +25,24 @@ namespace MFDMInterface
 
             StagePort.Open();
 
-            SendCommand(1, "SN", 3);
-            SendCommand(2, "SN", 3);
-            SetResolution(1, 10);
-            SetResolution(2, 10);
-            SetMaxVelocity(1, 100);
-            SetMaxVelocity(2, 100);
-            SetVelocity(1, 100);
-            SetVelocity(2, 100);
-            SetAcceleration(1, 50);
-            SetAcceleration(2, 50);
+            SetUnits(1, 0);
+            SetUnits(2, 0);
+            SetResolution(1, 1);
+            SetResolution(2, 1);
+
+            SetMaxAccDec(1, 50000);
+            SetMaxAccDec(2, 50000);
+
+            SetAcceleration(1, 50000);
+            SetAcceleration(2, 50000);
+            SetDeceleration(1, 50000);
+            SetDeceleration(2, 50000);
+
+            SetMaxVelocity(1, 141374);
+            SetMaxVelocity(2, 141374);
+
+            SetVelocity(1, 70000);
+            SetVelocity(2, 70000);
         }
 
         public void SendCommand(int stageNum, string command, int setting)
@@ -62,9 +70,24 @@ namespace MFDMInterface
             SendCommand(stageNum, "AC", acceleration);
         }
 
+        public void SetDeceleration(int stageNum, int deceleration)
+        {
+            SendCommand(stageNum, "AG", deceleration);
+        }
+
         public void MoveRelative(int stageNum, int units)
         {
             SendCommand(stageNum, "PR", units);
+        }
+
+        public void SetMaxAccDec(int stageNum, int accDec)
+        {
+            SendCommand(stageNum, "AU", accDec);
+        }
+
+        public void SetUnits(int stageNum, int units)
+        {
+            SendCommand(stageNum, "SN", units);
         }
     }
 }
