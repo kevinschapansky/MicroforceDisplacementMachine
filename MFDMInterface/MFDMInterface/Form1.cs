@@ -13,10 +13,13 @@ namespace MFDMInterface
     public partial class Form1 : Form
     {
         private StageController MovementController;
+        private CalibrationUtility CalUtill;
+
         public Form1()
         {
             InitializeComponent();
             MovementController = new StageController();
+            CalUtill = new CalibrationUtility(MovementController, "COM3");
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -91,12 +94,28 @@ namespace MFDMInterface
             {
                 icImagingControl1.LiveDisplayZoomFactor = (float)sldZoom.Value / 10.0f;
                 lblZoomPercent.Text = (sldZoom.Value * 10).ToString() + "%";
-                icImagingControl1.LiveDisplayPosition = new Point(icImagingControl1.LiveDisplayWidth / 2, icImagingControl1.LiveDisplayHeight / 2);
+                icImagingControl1.LiveDisplayPosition = new Point((-1 * icImagingControl1.LiveDisplayWidth / 2) + icImagingControl1.Width / 2,
+                    (-1 * icImagingControl1.LiveDisplayHeight / 2) + icImagingControl1.Height / 2);
             }
             else
             {
                 MessageBox.Show("The zoom factor can only be set" + "\n" + "if LiveDisplayDefault returns False!");
             }
+        }
+
+        private void probeUp_Click(object sender, EventArgs e)
+        {
+            MovementController.ZPositive();
+        }
+
+        private void probeDown_Click(object sender, EventArgs e)
+        {
+            MovementController.ZNegative();
+        }
+
+        private void balCalButton_Click(object sender, EventArgs e)
+        {
+            CalUtill.GenerateBalanceCalibrationData();
         }
 
 

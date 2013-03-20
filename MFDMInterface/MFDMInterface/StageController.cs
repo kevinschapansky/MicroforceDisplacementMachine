@@ -16,6 +16,12 @@ namespace MFDMInterface
         public static int ZChannel = 2;
         public static int YChannel = 1;
 
+        public int ZResolution
+        {
+            get { return ZRes; }
+            set { ZRes = value; }
+        }
+
         public int XResolution 
         { 
             get { return XRes; } 
@@ -47,11 +53,17 @@ namespace MFDMInterface
         private YAxis YAxisController;
         private ZAxis ZAxisController;
 
+        public static int OneMillimeter = 28275;
+        public static int FiveHundredMicrons = 14137;
+        public static int OneMicron = 28;
+        public static int HalfMicron = 14;
+
         private int XRes = 3000;
         private int YRes = 3000;
+        private int ZRes = FiveHundredMicrons;
 
-        private int XFRes = 28275;
-        private int YFRes = 28275;
+        private int XFRes = OneMillimeter;
+        private int YFRes = OneMillimeter;
 
         public StageController()
         {
@@ -61,6 +73,26 @@ namespace MFDMInterface
             XAxisController = new XAxis(XCommunicator, XLChannel, XRChannel);
             YAxisController = new YAxis(YZCommunicator, YChannel);
             ZAxisController = new ZAxis(YZCommunicator, ZChannel);
+        }
+
+        public void ZNegativeAuto()
+        {
+            ZAxisController.Move(HalfMicron);
+        }
+
+        public void ZPositiveAuto()
+        {
+            ZAxisController.Move(-1 * HalfMicron);
+        }
+
+        public void ZNegative()
+        {
+            ZAxisController.Move(ZResolution);
+        }
+
+        public void ZPositive() 
+        {
+            ZAxisController.Move(-1 * ZResolution);
         }
 
         public void XNegative()

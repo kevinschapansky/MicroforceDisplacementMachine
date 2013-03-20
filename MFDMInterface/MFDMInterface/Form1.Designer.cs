@@ -39,6 +39,9 @@
             this.FRight = new System.Windows.Forms.Button();
             this.sldZoom = new System.Windows.Forms.TrackBar();
             this.lblZoomPercent = new System.Windows.Forms.Label();
+            this.probeUp = new System.Windows.Forms.Button();
+            this.probeDown = new System.Windows.Forms.Button();
+            this.balCalButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.icImagingControl1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sldZoom)).BeginInit();
             this.SuspendLayout();
@@ -137,9 +140,12 @@
             // sldZoom
             // 
             this.sldZoom.Location = new System.Drawing.Point(12, 246);
+            this.sldZoom.Maximum = 11;
+            this.sldZoom.Minimum = 1;
             this.sldZoom.Name = "sldZoom";
             this.sldZoom.Size = new System.Drawing.Size(326, 45);
             this.sldZoom.TabIndex = 13;
+            this.sldZoom.Value = 1;
             this.sldZoom.Scroll += new System.EventHandler(this.sldZoom_Scroll);
             // 
             // lblZoomPercent
@@ -151,11 +157,44 @@
             this.lblZoomPercent.TabIndex = 14;
             this.lblZoomPercent.Text = "Zoom: ";
             // 
+            // probeUp
+            // 
+            this.probeUp.Location = new System.Drawing.Point(415, 45);
+            this.probeUp.Name = "probeUp";
+            this.probeUp.Size = new System.Drawing.Size(75, 23);
+            this.probeUp.TabIndex = 15;
+            this.probeUp.Text = "Probe Up";
+            this.probeUp.UseVisualStyleBackColor = true;
+            this.probeUp.Click += new System.EventHandler(this.probeUp_Click);
+            // 
+            // probeDown
+            // 
+            this.probeDown.Location = new System.Drawing.Point(415, 75);
+            this.probeDown.Name = "probeDown";
+            this.probeDown.Size = new System.Drawing.Size(75, 23);
+            this.probeDown.TabIndex = 16;
+            this.probeDown.Text = "Probe Down";
+            this.probeDown.UseVisualStyleBackColor = true;
+            this.probeDown.Click += new System.EventHandler(this.probeDown_Click);
+            // 
+            // balCalButton
+            // 
+            this.balCalButton.Location = new System.Drawing.Point(613, 191);
+            this.balCalButton.Name = "balCalButton";
+            this.balCalButton.Size = new System.Drawing.Size(154, 23);
+            this.balCalButton.TabIndex = 17;
+            this.balCalButton.Text = "Balance Calibration";
+            this.balCalButton.UseVisualStyleBackColor = true;
+            this.balCalButton.Click += new System.EventHandler(this.balCalButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(779, 633);
+            this.Controls.Add(this.balCalButton);
+            this.Controls.Add(this.probeDown);
+            this.Controls.Add(this.probeUp);
             this.Controls.Add(this.lblZoomPercent);
             this.Controls.Add(this.sldZoom);
             this.Controls.Add(this.FRight);
@@ -190,6 +229,9 @@
         private System.Windows.Forms.Button FRight;
         private System.Windows.Forms.TrackBar sldZoom;
         private System.Windows.Forms.Label lblZoomPercent;
+        private System.Windows.Forms.Button probeUp;
+        private System.Windows.Forms.Button probeDown;
+        private System.Windows.Forms.Button balCalButton;
     }
 }
 
