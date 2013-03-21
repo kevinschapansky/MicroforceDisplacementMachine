@@ -75,6 +75,16 @@ namespace MFDMInterface
             ZAxisController = new ZAxis(YZCommunicator, ZChannel);
         }
 
+        public void ZNegative(int encoderUnits)
+        {
+            ZAxisController.Move(encoderUnits);
+        }
+
+        public void ZPositive(int encoderUnits)
+        {
+            ZAxisController.Move(-1 * encoderUnits);
+        }
+
         public void ZNegativeAuto()
         {
             ZAxisController.Move(HalfMicron);

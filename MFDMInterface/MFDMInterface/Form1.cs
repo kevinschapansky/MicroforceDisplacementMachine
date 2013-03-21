@@ -19,7 +19,7 @@ namespace MFDMInterface
         {
             InitializeComponent();
             MovementController = new StageController();
-            CalUtill = new CalibrationUtility(MovementController, "COM3");
+            CalUtill = new CalibrationUtility(MovementController, "COM3", "COMX"); //THIS IS THE LINE (Move...roller, Balance, Keithley)
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -115,7 +115,12 @@ namespace MFDMInterface
 
         private void balCalButton_Click(object sender, EventArgs e)
         {
-            CalUtill.GenerateBalanceCalibrationData();
+            CalUtill.GenerateBalanceCalibrationData(float.Parse(stopValue.Text), int.Parse(readingDelay.Text), int.Parse(stepSize.Text), outFile.Text);
+        }
+
+        private void bcCal_Click(object sender, EventArgs e)
+        {
+            CalUtill.GenerateBalanceKeithleyCalibrationData(float.Parse(stopValue.Text), int.Parse(readingDelay.Text), int.Parse(stepSize.Text), outFile.Text);
         }
 
 

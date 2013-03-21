@@ -42,6 +42,15 @@
             this.probeUp = new System.Windows.Forms.Button();
             this.probeDown = new System.Windows.Forms.Button();
             this.balCalButton = new System.Windows.Forms.Button();
+            this.stopValue = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.readingDelay = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.stepSize = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.outFile = new System.Windows.Forms.TextBox();
+            this.bcCal = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.icImagingControl1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sldZoom)).BeginInit();
             this.SuspendLayout();
@@ -179,7 +188,7 @@
             // 
             // balCalButton
             // 
-            this.balCalButton.Location = new System.Drawing.Point(613, 191);
+            this.balCalButton.Location = new System.Drawing.Point(613, 7);
             this.balCalButton.Name = "balCalButton";
             this.balCalButton.Size = new System.Drawing.Size(154, 23);
             this.balCalButton.TabIndex = 17;
@@ -187,11 +196,94 @@
             this.balCalButton.UseVisualStyleBackColor = true;
             this.balCalButton.Click += new System.EventHandler(this.balCalButton_Click);
             // 
+            // stopValue
+            // 
+            this.stopValue.Location = new System.Drawing.Point(667, 36);
+            this.stopValue.Name = "stopValue";
+            this.stopValue.Size = new System.Drawing.Size(100, 20);
+            this.stopValue.TabIndex = 18;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(602, 39);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(59, 13);
+            this.label1.TabIndex = 19;
+            this.label1.Text = "Stop Value";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(562, 65);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(99, 13);
+            this.label2.TabIndex = 20;
+            this.label2.Text = "Reading Delay (ms)";
+            // 
+            // readingDelay
+            // 
+            this.readingDelay.Location = new System.Drawing.Point(667, 62);
+            this.readingDelay.Name = "readingDelay";
+            this.readingDelay.Size = new System.Drawing.Size(100, 20);
+            this.readingDelay.TabIndex = 21;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(588, 91);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(73, 13);
+            this.label3.TabIndex = 22;
+            this.label3.Text = "Step Size (en)";
+            // 
+            // stepSize
+            // 
+            this.stepSize.Location = new System.Drawing.Point(667, 88);
+            this.stepSize.Name = "stepSize";
+            this.stepSize.Size = new System.Drawing.Size(100, 20);
+            this.stepSize.TabIndex = 23;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(551, 117);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(110, 13);
+            this.label4.TabIndex = 24;
+            this.label4.Text = "Calibration Output File";
+            // 
+            // outFile
+            // 
+            this.outFile.Location = new System.Drawing.Point(667, 114);
+            this.outFile.Name = "outFile";
+            this.outFile.Size = new System.Drawing.Size(100, 20);
+            this.outFile.TabIndex = 25;
+            // 
+            // bcCal
+            // 
+            this.bcCal.Location = new System.Drawing.Point(598, 140);
+            this.bcCal.Name = "bcCal";
+            this.bcCal.Size = new System.Drawing.Size(169, 23);
+            this.bcCal.TabIndex = 26;
+            this.bcCal.Text = "Balance/Keithley Calibration";
+            this.bcCal.UseVisualStyleBackColor = true;
+            this.bcCal.Click += new System.EventHandler(this.bcCal_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(779, 633);
+            this.Controls.Add(this.bcCal);
+            this.Controls.Add(this.outFile);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.stepSize);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.readingDelay);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.stopValue);
             this.Controls.Add(this.balCalButton);
             this.Controls.Add(this.probeDown);
             this.Controls.Add(this.probeUp);
@@ -232,6 +324,15 @@
         private System.Windows.Forms.Button probeUp;
         private System.Windows.Forms.Button probeDown;
         private System.Windows.Forms.Button balCalButton;
+        private System.Windows.Forms.TextBox stopValue;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox readingDelay;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox stepSize;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox outFile;
+        private System.Windows.Forms.Button bcCal;
     }
 }
 
