@@ -27,7 +27,7 @@ namespace MFDMInterface
 
             BalancePort.Open();
 
-            KeithleyPort = new SerialPort(balancePort);
+            KeithleyPort = new SerialPort(keithleyPort);
             KeithleyPort.BaudRate = 19200;
             KeithleyPort.Parity = Parity.None;
             KeithleyPort.DataBits = 8;
@@ -48,6 +48,8 @@ namespace MFDMInterface
             KeithleyPort.Write(":SOUR:CLE:AUTO ON\r");
             KeithleyPort.Write(":TRIG:COUN 1\r");
             KeithleyPort.Write(":FORM:ELEM VOLT\r");
+            KeithleyPort.Write(":OUTP ON\r");
+            KeithleyPort.Write(":READ?\r");
         }
 
         public void GenerateBalanceKeithleyCalibrationData(float stopValue, int readingDelay, int stepSize, string outFile)
@@ -56,6 +58,7 @@ namespace MFDMInterface
             char[] splitChars = { ' ' };
             string result;
             string[] splitResult;
+            
             System.IO.StreamWriter file = new System.IO.StreamWriter(@"C:\Users\microfab\Desktop\" + outFile);
 
             do
@@ -75,6 +78,7 @@ namespace MFDMInterface
                     }
                 }
                 curPressure = float.Parse(result, System.Globalization.CultureInfo.InvariantCulture);
+                KeithleyPort.Write(":READ?\r");
                 file.WriteLine(curPressure + "," + KeithleyPort.ReadLine());
             } while (curPressure <= stopValue);
             file.Close();

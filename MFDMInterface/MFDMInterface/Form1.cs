@@ -19,7 +19,7 @@ namespace MFDMInterface
         {
             InitializeComponent();
             MovementController = new StageController();
-            CalUtill = new CalibrationUtility(MovementController, "COM3", "COMX"); //THIS IS THE LINE (Move...roller, Balance, Keithley)
+            CalUtill = new CalibrationUtility(MovementController, "COM6", "COM3"); //THIS IS THE LINE (Move...roller, Balance, Keithley)
         }
 
         private void Form1_Load(object sender, EventArgs e)
