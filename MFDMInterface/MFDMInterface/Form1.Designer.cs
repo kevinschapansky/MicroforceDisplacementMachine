@@ -70,11 +70,13 @@
             this.icImagingControl1.BackColor = System.Drawing.Color.White;
             this.icImagingControl1.DeviceLostExecutionMode = TIS.Imaging.EventExecutionMode.AsyncInvoke;
             this.icImagingControl1.ImageAvailableExecutionMode = TIS.Imaging.EventExecutionMode.MultiThreaded;
+            this.icImagingControl1.LiveDisplayDefault = false;
             this.icImagingControl1.LiveDisplayPosition = new System.Drawing.Point(0, 0);
             this.icImagingControl1.Location = new System.Drawing.Point(12, 12);
             this.icImagingControl1.Name = "icImagingControl1";
             this.icImagingControl1.Size = new System.Drawing.Size(326, 228);
             this.icImagingControl1.TabIndex = 5;
+            this.icImagingControl1.MouseDown += this.icImagingControl1_MouseDown;
             // 
             // DownButton
             // 

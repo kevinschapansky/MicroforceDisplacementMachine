@@ -96,6 +96,16 @@ namespace MFDMInterface
                 lblZoomPercent.Text = (sldZoom.Value * 10).ToString() + "%";
                 icImagingControl1.LiveDisplayPosition = new Point((-1 * icImagingControl1.LiveDisplayWidth / 2) + icImagingControl1.Width / 2,
                     (-1 * icImagingControl1.LiveDisplayHeight / 2) + icImagingControl1.Height / 2);
+                int centerWidth = (-1 * icImagingControl1.LiveDisplayWidth / 2) + icImagingControl1.Width / 2;
+                int centerHeight = (-1 * icImagingControl1.LiveDisplayHeight / 2) + icImagingControl1.Height / 2;
+                //icImagingControl1.OverlayBitmap.DrawLine(Color.Red, centerWidth / 2 - 10, centerHeight / 2,centerWidth / 2 + 10, centerHeight / 2);
+                //icImagingControl1.OverlayBitmap.DrawLine(Color.Red, centerWidth / 2, centerHeight / 2 - 10, centerWidth / 2, centerHeight / 2 + 10);
+                icImagingControl1.OverlayBitmap.Enable = true;
+                icImagingControl1.OverlayBitmap.ColorMode = TIS.Imaging.OverlayColorModes.Color;
+                int width = icImagingControl1.Width;
+                int height = icImagingControl1.Height;
+                //icImagingControl1.OverlayBitmap.DrawLine(Color.Red, width / 2 - 10, height / 2, width / 2 + 10, height / 2);
+                //icImagingControl1.OverlayBitmap.DrawLine(Color.Red, width / 2, height / 2 - 10, width / 2, height / 2 + 10);
             }
             else
             {
@@ -123,6 +133,11 @@ namespace MFDMInterface
             CalUtill.GenerateBalanceKeithleyCalibrationData(float.Parse(stopValue.Text), int.Parse(readingDelay.Text), int.Parse(stepSize.Text), outFile.Text);
         }
 
-
+        private void icImagingControl1_MouseDown(object sender, MouseEventArgs e)
+        {
+            icImagingControl1.OverlayBitmap.DrawLine(Color.Red, e.X, e.Y - 10, e.X, e.Y + 10);
+            icImagingControl1.OverlayBitmap.DrawLine(Color.Red, e.X - 10, e.Y, e.X + 10, e.Y);
+            Console.WriteLine(e.X + " " + e.Y);
+        }
     }
 }
