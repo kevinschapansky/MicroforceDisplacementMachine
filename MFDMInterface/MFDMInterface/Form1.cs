@@ -24,7 +24,12 @@ namespace MFDMInterface
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            assXOffLabel.Text = "Assumed X Offset: " + CalUtill.XOffset + " (en)";
+            assYOffLabel.Text = "Assumed Y Offset: " + CalUtill.YOffset + " (en)";
+            actXOffLabel.Text = "Actual X Offset: -- (en)";
+            actYOffLabel.Text = "Actual Y Offset: -- (en)";
+            verticalStepLabel.Text = "Vertical Step Size: " + verticalStepBar.Value + " (en)";
+            stepSizeLabel.Text = "Step Size: " + XYStepBar.Value + " (en)";
             if (!icImagingControl1.DeviceValid)
             {
                 icImagingControl1.ShowDeviceSettingsDialog();
@@ -40,52 +45,43 @@ namespace MFDMInterface
                 icImagingControl1.LiveDisplayDefault = false;
                 icImagingControl1.LiveDisplayHeight = icImagingControl1.Height;
                 icImagingControl1.LiveDisplayWidth = icImagingControl1.Width;
+
                 icImagingControl1.OverlayBitmap.Enable = true;
                 icImagingControl1.OverlayBitmap.ColorMode = TIS.Imaging.OverlayColorModes.Color;
-                icImagingControl1.OverlayBitmap.DrawLine(Color.Red,width / 2 - 10, height / 2, width / 2 + 10, height / 2);
-                icImagingControl1.OverlayBitmap.DrawLine(Color.Red, width / 2, height / 2 - 10, width / 2, height / 2 + 10);
+
+                icImagingControl1.LiveDisplayZoomFactor = (float)sldZoom.Value / 10.0f;
+                lblZoomPercent.Text = (sldZoom.Value * 10).ToString() + "%";
+                icImagingControl1.LiveDisplayPosition = new Point((-1 * icImagingControl1.LiveDisplayWidth / 2) + icImagingControl1.Width / 2,
+                    (-1 * icImagingControl1.LiveDisplayHeight / 2) + icImagingControl1.Height / 2);
+
                 icImagingControl1.LiveStart();
+                DrawCrosshairs();
             }
         }
 
         private void LeftButton_Click(object sender, EventArgs e)
         {
-            MovementController.XNegative();
+            MovementController.XNegative(XYStepBar.Value);
         }
 
         private void UpButton_Click(object sender, EventArgs e)
         {
-            MovementController.YPositive();
+            MovementController.YPositive(XYStepBar.Value);
         }
 
         private void RightButton_Click(object sender, EventArgs e)
         {
-            MovementController.XPositive();
+            MovementController.XPositive(XYStepBar.Value);
         }
 
         private void DownButton_Click(object sender, EventArgs e)
         {
-            MovementController.YNegative();
+            MovementController.YNegative(XYStepBar.Value);
         }
 
-        private void FUp_Click(object sender, EventArgs e)
+        private void XYStepBar_Scroll(object sender, EventArgs e)
         {
-            MovementController.YFPositive();
-        }
-
-        private void FRight_Click(object sender, EventArgs e)
-        {
-            MovementController.XFPositive();
-        }
-
-        private void FDown_Click(object sender, EventArgs e)
-        {
-            MovementController.YFNegative();
-        }
-
-        private void FLeft_Click(object sender, EventArgs e)
-        {
-            MovementController.XFNegative();
+            stepSizeLabel.Text = "Step Size: " + XYStepBar.Value + " (en)";
         }
 
         private void sldZoom_Scroll(object sender, EventArgs e)
@@ -94,18 +90,11 @@ namespace MFDMInterface
             {
                 icImagingControl1.LiveDisplayZoomFactor = (float)sldZoom.Value / 10.0f;
                 lblZoomPercent.Text = (sldZoom.Value * 10).ToString() + "%";
-                icImagingControl1.LiveDisplayPosition = new Point((-1 * icImagingControl1.LiveDisplayWidth / 2) + icImagingControl1.Width / 2,
-                    (-1 * icImagingControl1.LiveDisplayHeight / 2) + icImagingControl1.Height / 2);
-                int centerWidth = (-1 * icImagingControl1.LiveDisplayWidth / 2) + icImagingControl1.Width / 2;
-                int centerHeight = (-1 * icImagingControl1.LiveDisplayHeight / 2) + icImagingControl1.Height / 2;
-                //icImagingControl1.OverlayBitmap.DrawLine(Color.Red, centerWidth / 2 - 10, centerHeight / 2,centerWidth / 2 + 10, centerHeight / 2);
-                //icImagingControl1.OverlayBitmap.DrawLine(Color.Red, centerWidth / 2, centerHeight / 2 - 10, centerWidth / 2, centerHeight / 2 + 10);
-                icImagingControl1.OverlayBitmap.Enable = true;
-                icImagingControl1.OverlayBitmap.ColorMode = TIS.Imaging.OverlayColorModes.Color;
-                int width = icImagingControl1.Width;
-                int height = icImagingControl1.Height;
-                //icImagingControl1.OverlayBitmap.DrawLine(Color.Red, width / 2 - 10, height / 2, width / 2 + 10, height / 2);
-                //icImagingControl1.OverlayBitmap.DrawLine(Color.Red, width / 2, height / 2 - 10, width / 2, height / 2 + 10);
+                int centerX = (-1 * icImagingControl1.LiveDisplayWidth / 2) + icImagingControl1.Width / 2;
+                int centerY = (-1 * icImagingControl1.LiveDisplayHeight / 2) + icImagingControl1.Height / 2;
+                icImagingControl1.LiveDisplayPosition = new Point(centerX, centerY);
+
+                DrawCrosshairs();
             }
             else
             {
@@ -113,14 +102,34 @@ namespace MFDMInterface
             }
         }
 
+        private void DrawCrosshairs()
+        {
+            int width = icImagingControl1.ImageWidth;
+            int height = icImagingControl1.ImageHeight;
+            int crosshairLength = (icImagingControl1.ImageWidth / icImagingControl1.LiveDisplayWidth) * 50;
+
+            icImagingControl1.OverlayBitmap.Fill(icImagingControl1.OverlayBitmap.DropOutColor);
+            for (int i = Math.Max(0, 7 - sldZoom.Value); i >= 0; i--)
+            {
+                icImagingControl1.OverlayBitmap.DrawLine(Color.Red, width / 2 - crosshairLength, height / 2, width / 2 + crosshairLength, height / 2);
+                icImagingControl1.OverlayBitmap.DrawLine(Color.Red, width / 2, height / 2 - crosshairLength, width / 2, height / 2 + crosshairLength);
+
+                icImagingControl1.OverlayBitmap.DrawLine(Color.Red, width / 2 - crosshairLength, height / 2 + i, width / 2 + crosshairLength, height / 2 + i);
+                icImagingControl1.OverlayBitmap.DrawLine(Color.Red, width / 2 + i, height / 2 - crosshairLength, width / 2 + i, height / 2 + crosshairLength);
+
+                icImagingControl1.OverlayBitmap.DrawLine(Color.Red, width / 2 - crosshairLength, height / 2 - i, width / 2 + crosshairLength, height / 2 - i);
+                icImagingControl1.OverlayBitmap.DrawLine(Color.Red, width / 2 - i, height / 2 - crosshairLength, width / 2 - i, height / 2 + crosshairLength);
+            }
+        }
+
         private void probeUp_Click(object sender, EventArgs e)
         {
-            MovementController.ZPositive();
+            MovementController.ZPositive(verticalStepBar.Value);
         }
 
         private void probeDown_Click(object sender, EventArgs e)
         {
-            MovementController.ZNegative();
+            MovementController.ZNegative(verticalStepBar.Value);
         }
 
         private void balCalButton_Click(object sender, EventArgs e)
@@ -133,11 +142,33 @@ namespace MFDMInterface
             CalUtill.GenerateBalanceKeithleyCalibrationData(float.Parse(stopValue.Text), int.Parse(readingDelay.Text), int.Parse(stepSize.Text), outFile.Text);
         }
 
-        private void icImagingControl1_MouseDown(object sender, MouseEventArgs e)
+        private void verticalStepBar_Scroll(object sender, EventArgs e)
         {
-            icImagingControl1.OverlayBitmap.DrawLine(Color.Red, e.X, e.Y - 10, e.X, e.Y + 10);
-            icImagingControl1.OverlayBitmap.DrawLine(Color.Red, e.X - 10, e.Y, e.X + 10, e.Y);
-            Console.WriteLine(e.X + " " + e.Y);
+            verticalStepLabel.Text = "Vertical Step Size: " + verticalStepBar.Value + " (en)";
         }
+
+        private void calButton_Click(object sender, EventArgs e)
+        {
+            MovementController.ResetMovement();
+            MovementController.XPositive(CalUtill.XOffset);
+            MovementController.YPositive(CalUtill.YOffset);
+        }
+
+        private void setButton_Click(object sender, EventArgs e)
+        {
+            CalUtill.XOffset = MovementController.XMovement;
+            CalUtill.YOffset = MovementController.YMovement;
+            assXOffLabel.Text = "Assumed X Offset: " + CalUtill.XOffset + " (en)";
+            assYOffLabel.Text = "Assumed Y Offset: " + CalUtill.YOffset + " (en)";
+            actXOffLabel.Text = "Actual X Offset: " + CalUtill.XOffset + " (en)";
+            actYOffLabel.Text = "Actual Y Offset: " + CalUtill.YOffset + " (en)";
+        }
+
+        private void backtrackButton_Click(object sender, EventArgs e)
+        {
+            MovementController.XPositive(-CalUtill.XOffset);
+            MovementController.YPositive(-CalUtill.YOffset);
+        }
+
     }
 }

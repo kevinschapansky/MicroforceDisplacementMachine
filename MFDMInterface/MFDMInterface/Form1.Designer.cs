@@ -33,10 +33,6 @@
             this.DownButton = new System.Windows.Forms.Button();
             this.RightButton = new System.Windows.Forms.Button();
             this.LeftButton = new System.Windows.Forms.Button();
-            this.FUp = new System.Windows.Forms.Button();
-            this.FLeft = new System.Windows.Forms.Button();
-            this.FDown = new System.Windows.Forms.Button();
-            this.FRight = new System.Windows.Forms.Button();
             this.sldZoom = new System.Windows.Forms.TrackBar();
             this.lblZoomPercent = new System.Windows.Forms.Label();
             this.probeUp = new System.Windows.Forms.Button();
@@ -51,13 +47,28 @@
             this.label4 = new System.Windows.Forms.Label();
             this.outFile = new System.Windows.Forms.TextBox();
             this.bcCal = new System.Windows.Forms.Button();
+            this.XYStepBar = new System.Windows.Forms.TrackBar();
+            this.stepSizeLabel = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.verticalStepBar = new System.Windows.Forms.TrackBar();
+            this.verticalStepLabel = new System.Windows.Forms.Label();
+            this.assYOffLabel = new System.Windows.Forms.Label();
+            this.assXOffLabel = new System.Windows.Forms.Label();
+            this.actXOffLabel = new System.Windows.Forms.Label();
+            this.actYOffLabel = new System.Windows.Forms.Label();
+            this.calButton = new System.Windows.Forms.Button();
+            this.setButton = new System.Windows.Forms.Button();
+            this.backtrackButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.icImagingControl1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sldZoom)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.XYStepBar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.verticalStepBar)).BeginInit();
             this.SuspendLayout();
             // 
             // UpButton
             // 
-            this.UpButton.Location = new System.Drawing.Point(232, 328);
+            this.UpButton.Location = new System.Drawing.Point(133, 316);
             this.UpButton.Name = "UpButton";
             this.UpButton.Size = new System.Drawing.Size(75, 23);
             this.UpButton.TabIndex = 0;
@@ -76,11 +87,10 @@
             this.icImagingControl1.Name = "icImagingControl1";
             this.icImagingControl1.Size = new System.Drawing.Size(326, 228);
             this.icImagingControl1.TabIndex = 5;
-            this.icImagingControl1.MouseDown += this.icImagingControl1_MouseDown;
             // 
             // DownButton
             // 
-            this.DownButton.Location = new System.Drawing.Point(232, 400);
+            this.DownButton.Location = new System.Drawing.Point(133, 388);
             this.DownButton.Name = "DownButton";
             this.DownButton.Size = new System.Drawing.Size(75, 23);
             this.DownButton.TabIndex = 6;
@@ -90,7 +100,7 @@
             // 
             // RightButton
             // 
-            this.RightButton.Location = new System.Drawing.Point(334, 365);
+            this.RightButton.Location = new System.Drawing.Point(235, 353);
             this.RightButton.Name = "RightButton";
             this.RightButton.Size = new System.Drawing.Size(75, 23);
             this.RightButton.TabIndex = 7;
@@ -100,7 +110,7 @@
             // 
             // LeftButton
             // 
-            this.LeftButton.Location = new System.Drawing.Point(124, 365);
+            this.LeftButton.Location = new System.Drawing.Point(25, 353);
             this.LeftButton.Name = "LeftButton";
             this.LeftButton.Size = new System.Drawing.Size(75, 23);
             this.LeftButton.TabIndex = 8;
@@ -108,55 +118,14 @@
             this.LeftButton.UseVisualStyleBackColor = true;
             this.LeftButton.Click += new System.EventHandler(this.LeftButton_Click);
             // 
-            // FUp
-            // 
-            this.FUp.Location = new System.Drawing.Point(232, 299);
-            this.FUp.Name = "FUp";
-            this.FUp.Size = new System.Drawing.Size(75, 23);
-            this.FUp.TabIndex = 9;
-            this.FUp.Text = "Fast Up";
-            this.FUp.UseVisualStyleBackColor = true;
-            this.FUp.Click += new System.EventHandler(this.FUp_Click);
-            // 
-            // FLeft
-            // 
-            this.FLeft.Location = new System.Drawing.Point(43, 365);
-            this.FLeft.Name = "FLeft";
-            this.FLeft.Size = new System.Drawing.Size(75, 23);
-            this.FLeft.TabIndex = 10;
-            this.FLeft.Text = "Fast Left";
-            this.FLeft.UseVisualStyleBackColor = true;
-            this.FLeft.Click += new System.EventHandler(this.FLeft_Click);
-            // 
-            // FDown
-            // 
-            this.FDown.Location = new System.Drawing.Point(232, 429);
-            this.FDown.Name = "FDown";
-            this.FDown.Size = new System.Drawing.Size(75, 23);
-            this.FDown.TabIndex = 11;
-            this.FDown.Text = "Fast Down";
-            this.FDown.UseVisualStyleBackColor = true;
-            this.FDown.Click += new System.EventHandler(this.FDown_Click);
-            // 
-            // FRight
-            // 
-            this.FRight.Location = new System.Drawing.Point(415, 365);
-            this.FRight.Name = "FRight";
-            this.FRight.Size = new System.Drawing.Size(75, 23);
-            this.FRight.TabIndex = 12;
-            this.FRight.Text = "Fast Right";
-            this.FRight.UseVisualStyleBackColor = true;
-            this.FRight.Click += new System.EventHandler(this.FRight_Click);
-            // 
             // sldZoom
             // 
             this.sldZoom.Location = new System.Drawing.Point(12, 246);
-            this.sldZoom.Maximum = 11;
-            this.sldZoom.Minimum = 1;
+            this.sldZoom.Minimum = 2;
             this.sldZoom.Name = "sldZoom";
             this.sldZoom.Size = new System.Drawing.Size(326, 45);
             this.sldZoom.TabIndex = 13;
-            this.sldZoom.Value = 1;
+            this.sldZoom.Value = 2;
             this.sldZoom.Scroll += new System.EventHandler(this.sldZoom_Scroll);
             // 
             // lblZoomPercent
@@ -170,7 +139,7 @@
             // 
             // probeUp
             // 
-            this.probeUp.Location = new System.Drawing.Point(415, 45);
+            this.probeUp.Location = new System.Drawing.Point(400, 34);
             this.probeUp.Name = "probeUp";
             this.probeUp.Size = new System.Drawing.Size(75, 23);
             this.probeUp.TabIndex = 15;
@@ -180,7 +149,7 @@
             // 
             // probeDown
             // 
-            this.probeDown.Location = new System.Drawing.Point(415, 75);
+            this.probeDown.Location = new System.Drawing.Point(400, 65);
             this.probeDown.Name = "probeDown";
             this.probeDown.Size = new System.Drawing.Size(75, 23);
             this.probeDown.TabIndex = 16;
@@ -272,11 +241,150 @@
             this.bcCal.UseVisualStyleBackColor = true;
             this.bcCal.Click += new System.EventHandler(this.bcCal_Click);
             // 
+            // XYStepBar
+            // 
+            this.XYStepBar.Location = new System.Drawing.Point(12, 427);
+            this.XYStepBar.Maximum = 100000;
+            this.XYStepBar.Minimum = 1;
+            this.XYStepBar.Name = "XYStepBar";
+            this.XYStepBar.Size = new System.Drawing.Size(326, 45);
+            this.XYStepBar.TabIndex = 27;
+            this.XYStepBar.Value = 2;
+            this.XYStepBar.Scroll += new System.EventHandler(this.XYStepBar_Scroll);
+            // 
+            // stepSizeLabel
+            // 
+            this.stepSizeLabel.AutoSize = true;
+            this.stepSizeLabel.Location = new System.Drawing.Point(124, 459);
+            this.stepSizeLabel.Name = "stepSizeLabel";
+            this.stepSizeLabel.Size = new System.Drawing.Size(58, 13);
+            this.stepSizeLabel.TabIndex = 28;
+            this.stepSizeLabel.Text = "Step Size: ";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(25, 475);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(89, 13);
+            this.label5.TabIndex = 29;
+            this.label5.Text = "1 mm = 28275 en";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(25, 488);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(69, 13);
+            this.label6.TabIndex = 30;
+            this.label6.Text = "1 um = 28 en";
+            // 
+            // verticalStepBar
+            // 
+            this.verticalStepBar.Location = new System.Drawing.Point(344, 12);
+            this.verticalStepBar.Maximum = 28275;
+            this.verticalStepBar.Minimum = 1;
+            this.verticalStepBar.Name = "verticalStepBar";
+            this.verticalStepBar.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.verticalStepBar.Size = new System.Drawing.Size(45, 228);
+            this.verticalStepBar.TabIndex = 31;
+            this.verticalStepBar.Value = 1;
+            this.verticalStepBar.Scroll += new System.EventHandler(this.verticalStepBar_Scroll);
+            // 
+            // verticalStepLabel
+            // 
+            this.verticalStepLabel.AutoSize = true;
+            this.verticalStepLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.verticalStepLabel.Location = new System.Drawing.Point(397, 17);
+            this.verticalStepLabel.Name = "verticalStepLabel";
+            this.verticalStepLabel.Size = new System.Drawing.Size(93, 13);
+            this.verticalStepLabel.TabIndex = 32;
+            this.verticalStepLabel.Text = "Vertical Step Size:";
+            // 
+            // assYOffLabel
+            // 
+            this.assYOffLabel.AutoSize = true;
+            this.assYOffLabel.Location = new System.Drawing.Point(551, 246);
+            this.assYOffLabel.Name = "assYOffLabel";
+            this.assYOffLabel.Size = new System.Drawing.Size(34, 13);
+            this.assYOffLabel.TabIndex = 33;
+            this.assYOffLabel.Text = "Ass Y";
+            // 
+            // assXOffLabel
+            // 
+            this.assXOffLabel.AutoSize = true;
+            this.assXOffLabel.Location = new System.Drawing.Point(550, 233);
+            this.assXOffLabel.Name = "assXOffLabel";
+            this.assXOffLabel.Size = new System.Drawing.Size(34, 13);
+            this.assXOffLabel.TabIndex = 34;
+            this.assXOffLabel.Text = "Ass X";
+            // 
+            // actXOffLabel
+            // 
+            this.actXOffLabel.AutoSize = true;
+            this.actXOffLabel.Location = new System.Drawing.Point(550, 278);
+            this.actXOffLabel.Name = "actXOffLabel";
+            this.actXOffLabel.Size = new System.Drawing.Size(33, 13);
+            this.actXOffLabel.TabIndex = 35;
+            this.actXOffLabel.Text = "Act X";
+            // 
+            // actYOffLabel
+            // 
+            this.actYOffLabel.AutoSize = true;
+            this.actYOffLabel.Location = new System.Drawing.Point(551, 291);
+            this.actYOffLabel.Name = "actYOffLabel";
+            this.actYOffLabel.Size = new System.Drawing.Size(33, 13);
+            this.actYOffLabel.TabIndex = 36;
+            this.actYOffLabel.Text = "Act Y";
+            // 
+            // calButton
+            // 
+            this.calButton.Location = new System.Drawing.Point(554, 331);
+            this.calButton.Name = "calButton";
+            this.calButton.Size = new System.Drawing.Size(75, 23);
+            this.calButton.TabIndex = 37;
+            this.calButton.Text = "XY Calibrate";
+            this.calButton.UseVisualStyleBackColor = true;
+            this.calButton.Click += new System.EventHandler(this.calButton_Click);
+            // 
+            // setButton
+            // 
+            this.setButton.Location = new System.Drawing.Point(667, 331);
+            this.setButton.Name = "setButton";
+            this.setButton.Size = new System.Drawing.Size(75, 23);
+            this.setButton.TabIndex = 39;
+            this.setButton.Text = "Set Offset";
+            this.setButton.UseVisualStyleBackColor = true;
+            this.setButton.Click += new System.EventHandler(this.setButton_Click);
+            // 
+            // backtrackButton
+            // 
+            this.backtrackButton.Location = new System.Drawing.Point(553, 360);
+            this.backtrackButton.Name = "backtrackButton";
+            this.backtrackButton.Size = new System.Drawing.Size(75, 23);
+            this.backtrackButton.TabIndex = 40;
+            this.backtrackButton.Text = "Backtrack";
+            this.backtrackButton.UseVisualStyleBackColor = true;
+            this.backtrackButton.Click += new System.EventHandler(this.backtrackButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(779, 633);
+            this.ClientSize = new System.Drawing.Size(779, 514);
+            this.Controls.Add(this.backtrackButton);
+            this.Controls.Add(this.setButton);
+            this.Controls.Add(this.calButton);
+            this.Controls.Add(this.actYOffLabel);
+            this.Controls.Add(this.actXOffLabel);
+            this.Controls.Add(this.assXOffLabel);
+            this.Controls.Add(this.assYOffLabel);
+            this.Controls.Add(this.verticalStepLabel);
+            this.Controls.Add(this.verticalStepBar);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.stepSizeLabel);
+            this.Controls.Add(this.XYStepBar);
             this.Controls.Add(this.bcCal);
             this.Controls.Add(this.outFile);
             this.Controls.Add(this.label4);
@@ -291,10 +399,6 @@
             this.Controls.Add(this.probeUp);
             this.Controls.Add(this.lblZoomPercent);
             this.Controls.Add(this.sldZoom);
-            this.Controls.Add(this.FRight);
-            this.Controls.Add(this.FDown);
-            this.Controls.Add(this.FLeft);
-            this.Controls.Add(this.FUp);
             this.Controls.Add(this.LeftButton);
             this.Controls.Add(this.RightButton);
             this.Controls.Add(this.DownButton);
@@ -305,6 +409,8 @@
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.icImagingControl1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.sldZoom)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.XYStepBar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.verticalStepBar)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -317,10 +423,6 @@
         private System.Windows.Forms.Button DownButton;
         private System.Windows.Forms.Button RightButton;
         private System.Windows.Forms.Button LeftButton;
-        private System.Windows.Forms.Button FUp;
-        private System.Windows.Forms.Button FLeft;
-        private System.Windows.Forms.Button FDown;
-        private System.Windows.Forms.Button FRight;
         private System.Windows.Forms.TrackBar sldZoom;
         private System.Windows.Forms.Label lblZoomPercent;
         private System.Windows.Forms.Button probeUp;
@@ -335,6 +437,19 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox outFile;
         private System.Windows.Forms.Button bcCal;
+        private System.Windows.Forms.TrackBar XYStepBar;
+        private System.Windows.Forms.Label stepSizeLabel;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TrackBar verticalStepBar;
+        private System.Windows.Forms.Label verticalStepLabel;
+        private System.Windows.Forms.Label assYOffLabel;
+        private System.Windows.Forms.Label assXOffLabel;
+        private System.Windows.Forms.Label actXOffLabel;
+        private System.Windows.Forms.Label actYOffLabel;
+        private System.Windows.Forms.Button calButton;
+        private System.Windows.Forms.Button setButton;
+        private System.Windows.Forms.Button backtrackButton;
     }
 }
 

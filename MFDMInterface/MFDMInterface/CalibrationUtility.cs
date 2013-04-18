@@ -14,8 +14,14 @@ namespace MFDMInterface
         private SerialPort BalancePort;
         private SerialPort KeithleyPort;
 
+        public int XOffset;
+        public int YOffset;
+
         public CalibrationUtility(StageController stageCont, string balancePort, string keithleyPort)
         {
+            XOffset = 892985;
+            YOffset = -69572;
+
             MovementController = stageCont;
 
             BalancePort = new SerialPort(balancePort);

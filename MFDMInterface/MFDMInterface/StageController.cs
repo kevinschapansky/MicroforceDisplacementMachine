@@ -34,16 +34,14 @@ namespace MFDMInterface
             set { YRes = value; }
         }
 
-        public int XFResolution
+        public int XMovement
         {
-            get { return XFRes; }
-            set { XFRes = value; }
+            get { return _XMoveSinceLastRst; }
         }
 
-        public int YFResolution
+        public int YMovement
         {
-            get { return YFRes; }
-            set { YFRes = value; }
+            get { return _YMoveSinceLastRst; }
         }
 
         StageSerialCom XCommunicator;
@@ -58,12 +56,12 @@ namespace MFDMInterface
         public static int OneMicron = 28;
         public static int HalfMicron = 14;
 
-        private int XRes = 3000;
-        private int YRes = 3000;
+        private int XRes = FiveHundredMicrons;
+        private int YRes = FiveHundredMicrons;
         private int ZRes = FiveHundredMicrons;
 
-        private int XFRes = OneMillimeter;
-        private int YFRes = OneMillimeter;
+        private int _XMoveSinceLastRst;
+        private int _YMoveSinceLastRst;
 
         public StageController()
         {
@@ -73,6 +71,12 @@ namespace MFDMInterface
             XAxisController = new XAxis(XCommunicator, XLChannel, XRChannel);
             YAxisController = new YAxis(YZCommunicator, YChannel);
             ZAxisController = new ZAxis(YZCommunicator, ZChannel);
+        }
+
+        public void ResetMovement()
+        {
+            _XMoveSinceLastRst = 0;
+            _YMoveSinceLastRst = 0;
         }
 
         public void ZNegative(int encoderUnits)
@@ -87,62 +91,66 @@ namespace MFDMInterface
 
         public void ZNegativeAuto()
         {
-            ZAxisController.Move(HalfMicron);
+            ZNegative(HalfMicron);
         }
 
         public void ZPositiveAuto()
         {
-            ZAxisController.Move(-1 * HalfMicron);
+            ZPositive(HalfMicron);
         }
 
         public void ZNegative()
         {
-            ZAxisController.Move(ZResolution);
+            ZNegative(ZResolution);
         }
 
         public void ZPositive() 
         {
-            ZAxisController.Move(-1 * ZResolution);
+            ZPositive(ZResolution);
+        }
+
+        public void XNegative(int encoderUnits)
+        {
+            _XMoveSinceLastRst += -1 * encoderUnits;
+            XAxisController.Move(-1 * encoderUnits);
+        }
+
+        public void XPositive(int encoderUnits)
+        {
+            _XMoveSinceLastRst += encoderUnits;
+            XAxisController.Move(encoderUnits);
         }
 
         public void XNegative()
         {
-            XAxisController.Move(-1 * XResolution);
+            XNegative(XResolution);
         }
 
         public void XPositive()
         {
-            XAxisController.Move(XResolution);
+            XPositive(XResolution);
+        }
+
+        public void YNegative(int encoderUnits)
+        {
+            _YMoveSinceLastRst += -1 * encoderUnits;
+            YAxisController.Move(-1 * encoderUnits);
+        }
+
+        public void YPositive(int encoderUnits)
+        {
+            _YMoveSinceLastRst += encoderUnits;
+            YAxisController.Move(encoderUnits);
         }
 
         public void YNegative()
         {
-            YAxisController.Move(-1 * YResolution);
+            YNegative(YResolution);
         }
 
         public void YPositive()
         {
-            YAxisController.Move(YResolution);
-        }
-
-        public void XFNegative()
-        {
-            XAxisController.Move(-1 * XFResolution);
-        }
-
-        public void XFPositive()
-        {
-            XAxisController.Move(XFResolution);
-        }
-
-        public void YFNegative()
-        {
-            YAxisController.Move(-1 * YFResolution);
-        }
-
-        public void YFPositive()
-        {
-            YAxisController.Move(YFResolution);
+            YPositive(YResolution);
         }
     }
 }
