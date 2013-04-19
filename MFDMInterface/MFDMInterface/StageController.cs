@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace MFDMInterface
 {
-    class StageController
+    class StageController : INotifyPropertyChanged
     {
         public static string XPort = "COM4";
         public static string YZPort = "COM5";
@@ -37,11 +38,41 @@ namespace MFDMInterface
         public int XMovement
         {
             get { return _XMoveSinceLastRst; }
+            private set
+            {
+                _XMoveSinceLastRst = value;
+                FormattedXMovement = "Actual X Offset: " + value + " (en)";
+            }
         }
 
         public int YMovement
         {
             get { return _YMoveSinceLastRst; }
+            private set
+            {
+                _YMoveSinceLastRst = value;
+                FormattedYMovement = "Actual Y Offset: " + value + " (en)";
+            }
+        }
+
+        public string FormattedXMovement
+        {
+            get { return _FormattedX; }
+            private set
+            {
+                _FormattedX = value;
+                OnPropertyChanged("FormattedXMovement");
+            }
+        }
+
+        public string FormattedYMovement
+        {
+            get { return _FormattedY; }
+            private set
+            {
+                _FormattedY = value;
+                OnPropertyChanged("FormattedYMovement");
+            }
         }
 
         StageSerialCom XCommunicator;
@@ -63,6 +94,11 @@ namespace MFDMInterface
         private int _XMoveSinceLastRst;
         private int _YMoveSinceLastRst;
 
+        private string _FormattedX;
+        private string _FormattedY;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public StageController()
         {
             XCommunicator = new StageSerialCom(XPort);
@@ -75,8 +111,8 @@ namespace MFDMInterface
 
         public void ResetMovement()
         {
-            _XMoveSinceLastRst = 0;
-            _YMoveSinceLastRst = 0;
+            XMovement = 0;
+            YMovement = 0;
         }
 
         public void ZNegative(int encoderUnits)
@@ -111,13 +147,13 @@ namespace MFDMInterface
 
         public void XNegative(int encoderUnits)
         {
-            _XMoveSinceLastRst += -1 * encoderUnits;
+            XMovement += -1 * encoderUnits;
             XAxisController.Move(-1 * encoderUnits);
         }
 
         public void XPositive(int encoderUnits)
         {
-            _XMoveSinceLastRst += encoderUnits;
+            XMovement += encoderUnits;
             XAxisController.Move(encoderUnits);
         }
 
@@ -133,13 +169,13 @@ namespace MFDMInterface
 
         public void YNegative(int encoderUnits)
         {
-            _YMoveSinceLastRst += -1 * encoderUnits;
+            YMovement += -1 * encoderUnits;
             YAxisController.Move(-1 * encoderUnits);
         }
 
         public void YPositive(int encoderUnits)
         {
-            _YMoveSinceLastRst += encoderUnits;
+            YMovement += encoderUnits;
             YAxisController.Move(encoderUnits);
         }
 
@@ -151,6 +187,12 @@ namespace MFDMInterface
         public void YPositive()
         {
             YPositive(YResolution);
+        }
+
+        protected virtual void OnPropertyChanged(string property)
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(property));
         }
     }
 }

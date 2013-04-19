@@ -28,6 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.UpButton = new System.Windows.Forms.Button();
             this.icImagingControl1 = new TIS.Imaging.ICImagingControl();
             this.DownButton = new System.Windows.Forms.Button();
@@ -60,10 +63,12 @@
             this.calButton = new System.Windows.Forms.Button();
             this.setButton = new System.Windows.Forms.Button();
             this.backtrackButton = new System.Windows.Forms.Button();
+            this.forceDisplacementChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             ((System.ComponentModel.ISupportInitialize)(this.icImagingControl1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sldZoom)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.XYStepBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.verticalStepBar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.forceDisplacementChart)).BeginInit();
             this.SuspendLayout();
             // 
             // UpButton
@@ -159,7 +164,7 @@
             // 
             // balCalButton
             // 
-            this.balCalButton.Location = new System.Drawing.Point(613, 7);
+            this.balCalButton.Location = new System.Drawing.Point(1016, 17);
             this.balCalButton.Name = "balCalButton";
             this.balCalButton.Size = new System.Drawing.Size(154, 23);
             this.balCalButton.TabIndex = 17;
@@ -169,15 +174,16 @@
             // 
             // stopValue
             // 
-            this.stopValue.Location = new System.Drawing.Point(667, 36);
+            this.stopValue.Location = new System.Drawing.Point(1070, 46);
             this.stopValue.Name = "stopValue";
             this.stopValue.Size = new System.Drawing.Size(100, 20);
             this.stopValue.TabIndex = 18;
+            this.stopValue.Text = "10.0";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(602, 39);
+            this.label1.Location = new System.Drawing.Point(1005, 49);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(59, 13);
             this.label1.TabIndex = 19;
@@ -186,7 +192,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(562, 65);
+            this.label2.Location = new System.Drawing.Point(965, 75);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(99, 13);
             this.label2.TabIndex = 20;
@@ -194,15 +200,16 @@
             // 
             // readingDelay
             // 
-            this.readingDelay.Location = new System.Drawing.Point(667, 62);
+            this.readingDelay.Location = new System.Drawing.Point(1070, 72);
             this.readingDelay.Name = "readingDelay";
             this.readingDelay.Size = new System.Drawing.Size(100, 20);
             this.readingDelay.TabIndex = 21;
+            this.readingDelay.Text = "5000";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(588, 91);
+            this.label3.Location = new System.Drawing.Point(991, 101);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(73, 13);
             this.label3.TabIndex = 22;
@@ -210,15 +217,16 @@
             // 
             // stepSize
             // 
-            this.stepSize.Location = new System.Drawing.Point(667, 88);
+            this.stepSize.Location = new System.Drawing.Point(1070, 98);
             this.stepSize.Name = "stepSize";
             this.stepSize.Size = new System.Drawing.Size(100, 20);
             this.stepSize.TabIndex = 23;
+            this.stepSize.Text = "28";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(551, 117);
+            this.label4.Location = new System.Drawing.Point(954, 127);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(110, 13);
             this.label4.TabIndex = 24;
@@ -226,14 +234,15 @@
             // 
             // outFile
             // 
-            this.outFile.Location = new System.Drawing.Point(667, 114);
+            this.outFile.Location = new System.Drawing.Point(1070, 124);
             this.outFile.Name = "outFile";
             this.outFile.Size = new System.Drawing.Size(100, 20);
             this.outFile.TabIndex = 25;
+            this.outFile.Text = "TestCal_1.txt";
             // 
             // bcCal
             // 
-            this.bcCal.Location = new System.Drawing.Point(598, 140);
+            this.bcCal.Location = new System.Drawing.Point(1001, 150);
             this.bcCal.Name = "bcCal";
             this.bcCal.Size = new System.Drawing.Size(169, 23);
             this.bcCal.TabIndex = 26;
@@ -304,7 +313,7 @@
             // assYOffLabel
             // 
             this.assYOffLabel.AutoSize = true;
-            this.assYOffLabel.Location = new System.Drawing.Point(551, 246);
+            this.assYOffLabel.Location = new System.Drawing.Point(954, 256);
             this.assYOffLabel.Name = "assYOffLabel";
             this.assYOffLabel.Size = new System.Drawing.Size(34, 13);
             this.assYOffLabel.TabIndex = 33;
@@ -313,7 +322,7 @@
             // assXOffLabel
             // 
             this.assXOffLabel.AutoSize = true;
-            this.assXOffLabel.Location = new System.Drawing.Point(550, 233);
+            this.assXOffLabel.Location = new System.Drawing.Point(953, 243);
             this.assXOffLabel.Name = "assXOffLabel";
             this.assXOffLabel.Size = new System.Drawing.Size(34, 13);
             this.assXOffLabel.TabIndex = 34;
@@ -322,7 +331,7 @@
             // actXOffLabel
             // 
             this.actXOffLabel.AutoSize = true;
-            this.actXOffLabel.Location = new System.Drawing.Point(550, 278);
+            this.actXOffLabel.Location = new System.Drawing.Point(953, 288);
             this.actXOffLabel.Name = "actXOffLabel";
             this.actXOffLabel.Size = new System.Drawing.Size(33, 13);
             this.actXOffLabel.TabIndex = 35;
@@ -331,7 +340,7 @@
             // actYOffLabel
             // 
             this.actYOffLabel.AutoSize = true;
-            this.actYOffLabel.Location = new System.Drawing.Point(551, 291);
+            this.actYOffLabel.Location = new System.Drawing.Point(954, 301);
             this.actYOffLabel.Name = "actYOffLabel";
             this.actYOffLabel.Size = new System.Drawing.Size(33, 13);
             this.actYOffLabel.TabIndex = 36;
@@ -339,7 +348,7 @@
             // 
             // calButton
             // 
-            this.calButton.Location = new System.Drawing.Point(554, 331);
+            this.calButton.Location = new System.Drawing.Point(957, 341);
             this.calButton.Name = "calButton";
             this.calButton.Size = new System.Drawing.Size(75, 23);
             this.calButton.TabIndex = 37;
@@ -349,7 +358,7 @@
             // 
             // setButton
             // 
-            this.setButton.Location = new System.Drawing.Point(667, 331);
+            this.setButton.Location = new System.Drawing.Point(1070, 341);
             this.setButton.Name = "setButton";
             this.setButton.Size = new System.Drawing.Size(75, 23);
             this.setButton.TabIndex = 39;
@@ -359,7 +368,7 @@
             // 
             // backtrackButton
             // 
-            this.backtrackButton.Location = new System.Drawing.Point(553, 360);
+            this.backtrackButton.Location = new System.Drawing.Point(956, 370);
             this.backtrackButton.Name = "backtrackButton";
             this.backtrackButton.Size = new System.Drawing.Size(75, 23);
             this.backtrackButton.TabIndex = 40;
@@ -367,11 +376,28 @@
             this.backtrackButton.UseVisualStyleBackColor = true;
             this.backtrackButton.Click += new System.EventHandler(this.backtrackButton_Click);
             // 
+            // forceDisplacementChart
+            // 
+            chartArea1.Name = "ChartArea1";
+            this.forceDisplacementChart.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.forceDisplacementChart.Legends.Add(legend1);
+            this.forceDisplacementChart.Location = new System.Drawing.Point(536, 17);
+            this.forceDisplacementChart.Name = "forceDisplacementChart";
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.forceDisplacementChart.Series.Add(series1);
+            this.forceDisplacementChart.Size = new System.Drawing.Size(411, 300);
+            this.forceDisplacementChart.TabIndex = 41;
+            this.forceDisplacementChart.Text = "chart1";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(779, 514);
+            this.ClientSize = new System.Drawing.Size(1182, 514);
+            this.Controls.Add(this.forceDisplacementChart);
             this.Controls.Add(this.backtrackButton);
             this.Controls.Add(this.setButton);
             this.Controls.Add(this.calButton);
@@ -411,6 +437,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.sldZoom)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.XYStepBar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.verticalStepBar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.forceDisplacementChart)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -450,6 +477,7 @@
         private System.Windows.Forms.Button calButton;
         private System.Windows.Forms.Button setButton;
         private System.Windows.Forms.Button backtrackButton;
+        private System.Windows.Forms.DataVisualization.Charting.Chart forceDisplacementChart;
     }
 }
 

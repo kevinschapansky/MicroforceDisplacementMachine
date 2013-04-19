@@ -17,6 +17,8 @@ namespace MFDMInterface
         public int XOffset;
         public int YOffset;
 
+        public delegate void DataUpdateDelegate(float displacement, float voltage);
+
         public CalibrationUtility(StageController stageCont, string balancePort, string keithleyPort)
         {
             XOffset = 892985;
@@ -58,18 +60,21 @@ namespace MFDMInterface
             KeithleyPort.Write(":READ?\r");
         }
 
-        public void GenerateBalanceKeithleyCalibrationData(float stopValue, int readingDelay, int stepSize, string outFile)
+        public void GenerateBalanceKeithleyCalibrationData(DataUpdateDelegate graphUpdate, float stopValue, int readingDelay, int stepSize, string outFile)
         {
             float curPressure;
             char[] splitChars = { ' ' };
             string result;
             string[] splitResult;
+            float displacement = 0;
+            string strVolt;
             
             System.IO.StreamWriter file = new System.IO.StreamWriter(@"C:\Users\microfab\Desktop\" + outFile);
 
             do
             {
                 MovementController.ZNegative(stepSize);
+                displacement += stepSize;
                 System.Threading.Thread.Sleep(readingDelay);
                 BalancePort.Write("!KP\r");
                 result = BalancePort.ReadLine();
@@ -85,7 +90,9 @@ namespace MFDMInterface
                 }
                 curPressure = float.Parse(result, System.Globalization.CultureInfo.InvariantCulture);
                 KeithleyPort.Write(":READ?\r");
-                file.WriteLine(curPressure + "," + KeithleyPort.ReadLine());
+                strVolt = KeithleyPort.ReadLine();
+                file.WriteLine(curPressure + "," + strVolt);
+                graphUpdate(displacement, float.Parse(strVolt, System.Globalization.CultureInfo.InvariantCulture));
             } while (curPressure <= stopValue);
             file.Close();
         }

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace MFDMInterface
 {
@@ -14,6 +15,7 @@ namespace MFDMInterface
     {
         private StageController MovementController;
         private CalibrationUtility CalUtill;
+        private Int32 CurrentOffset;
 
         public Form1()
         {
@@ -26,10 +28,16 @@ namespace MFDMInterface
         {
             assXOffLabel.Text = "Assumed X Offset: " + CalUtill.XOffset + " (en)";
             assYOffLabel.Text = "Assumed Y Offset: " + CalUtill.YOffset + " (en)";
-            actXOffLabel.Text = "Actual X Offset: -- (en)";
-            actYOffLabel.Text = "Actual Y Offset: -- (en)";
+
+            actXOffLabel.DataBindings.Add(new Binding("Text", MovementController, "FormattedXMovement"));
+            actYOffLabel.DataBindings.Add(new Binding("Text", MovementController, "FormattedYMovement"));
+            MovementController.ResetMovement();
+
             verticalStepLabel.Text = "Vertical Step Size: " + verticalStepBar.Value + " (en)";
             stepSizeLabel.Text = "Step Size: " + XYStepBar.Value + " (en)";
+
+            forceDisplacementChart.Series[0].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+
             if (!icImagingControl1.DeviceValid)
             {
                 icImagingControl1.ShowDeviceSettingsDialog();
@@ -57,6 +65,12 @@ namespace MFDMInterface
                 icImagingControl1.LiveStart();
                 DrawCrosshairs();
             }
+        }
+
+        public void UpdateGraph(float displacement, float voltage)
+        {
+            forceDisplacementChart.Series[0].Points.AddXY(displacement, voltage);
+            Console.WriteLine("Delegate Called");
         }
 
         private void LeftButton_Click(object sender, EventArgs e)
@@ -139,7 +153,7 @@ namespace MFDMInterface
 
         private void bcCal_Click(object sender, EventArgs e)
         {
-            CalUtill.GenerateBalanceKeithleyCalibrationData(float.Parse(stopValue.Text), int.Parse(readingDelay.Text), int.Parse(stepSize.Text), outFile.Text);
+            CalUtill.GenerateBalanceKeithleyCalibrationData(new CalibrationUtility.DataUpdateDelegate(UpdateGraph), float.Parse(stopValue.Text), int.Parse(readingDelay.Text), int.Parse(stepSize.Text), outFile.Text);
         }
 
         private void verticalStepBar_Scroll(object sender, EventArgs e)
