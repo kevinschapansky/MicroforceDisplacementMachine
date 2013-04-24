@@ -61,6 +61,7 @@
     <Compile Include="StageAxis.cs" />
     <Compile Include="StageController.cs" />
     <Compile Include="StageSerialCom.cs" />
+    <Compile Include="TestingUtility.cs" />
     <Compile Include="XAxis.cs" />
     <Compile Include="YAxis.cs" />
     <Compile Include="ZAxis.cs" />

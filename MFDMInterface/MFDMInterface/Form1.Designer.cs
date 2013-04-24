@@ -40,7 +40,6 @@
             this.lblZoomPercent = new System.Windows.Forms.Label();
             this.probeUp = new System.Windows.Forms.Button();
             this.probeDown = new System.Windows.Forms.Button();
-            this.balCalButton = new System.Windows.Forms.Button();
             this.stopValue = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -64,6 +63,11 @@
             this.setButton = new System.Windows.Forms.Button();
             this.backtrackButton = new System.Windows.Forms.Button();
             this.forceDisplacementChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.runButton = new System.Windows.Forms.Button();
+            this.label7 = new System.Windows.Forms.Label();
+            this.stopVoltageText = new System.Windows.Forms.TextBox();
+            this.testPosition = new System.Windows.Forms.Button();
+            this.stopButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.icImagingControl1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sldZoom)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.XYStepBar)).BeginInit();
@@ -73,9 +77,9 @@
             // 
             // UpButton
             // 
-            this.UpButton.Location = new System.Drawing.Point(133, 316);
+            this.UpButton.Location = new System.Drawing.Point(91, 306);
             this.UpButton.Name = "UpButton";
-            this.UpButton.Size = new System.Drawing.Size(75, 23);
+            this.UpButton.Size = new System.Drawing.Size(49, 23);
             this.UpButton.TabIndex = 0;
             this.UpButton.Text = "Up";
             this.UpButton.UseVisualStyleBackColor = true;
@@ -95,9 +99,9 @@
             // 
             // DownButton
             // 
-            this.DownButton.Location = new System.Drawing.Point(133, 388);
+            this.DownButton.Location = new System.Drawing.Point(91, 363);
             this.DownButton.Name = "DownButton";
-            this.DownButton.Size = new System.Drawing.Size(75, 23);
+            this.DownButton.Size = new System.Drawing.Size(49, 23);
             this.DownButton.TabIndex = 6;
             this.DownButton.Text = "Down";
             this.DownButton.UseVisualStyleBackColor = true;
@@ -105,9 +109,9 @@
             // 
             // RightButton
             // 
-            this.RightButton.Location = new System.Drawing.Point(235, 353);
+            this.RightButton.Location = new System.Drawing.Point(145, 335);
             this.RightButton.Name = "RightButton";
-            this.RightButton.Size = new System.Drawing.Size(75, 23);
+            this.RightButton.Size = new System.Drawing.Size(49, 23);
             this.RightButton.TabIndex = 7;
             this.RightButton.Text = "Right";
             this.RightButton.UseVisualStyleBackColor = true;
@@ -115,9 +119,9 @@
             // 
             // LeftButton
             // 
-            this.LeftButton.Location = new System.Drawing.Point(25, 353);
+            this.LeftButton.Location = new System.Drawing.Point(36, 335);
             this.LeftButton.Name = "LeftButton";
-            this.LeftButton.Size = new System.Drawing.Size(75, 23);
+            this.LeftButton.Size = new System.Drawing.Size(49, 23);
             this.LeftButton.TabIndex = 8;
             this.LeftButton.Text = "Left";
             this.LeftButton.UseVisualStyleBackColor = true;
@@ -144,7 +148,7 @@
             // 
             // probeUp
             // 
-            this.probeUp.Location = new System.Drawing.Point(400, 34);
+            this.probeUp.Location = new System.Drawing.Point(228, 315);
             this.probeUp.Name = "probeUp";
             this.probeUp.Size = new System.Drawing.Size(75, 23);
             this.probeUp.TabIndex = 15;
@@ -154,7 +158,7 @@
             // 
             // probeDown
             // 
-            this.probeDown.Location = new System.Drawing.Point(400, 65);
+            this.probeDown.Location = new System.Drawing.Point(228, 346);
             this.probeDown.Name = "probeDown";
             this.probeDown.Size = new System.Drawing.Size(75, 23);
             this.probeDown.TabIndex = 16;
@@ -162,19 +166,9 @@
             this.probeDown.UseVisualStyleBackColor = true;
             this.probeDown.Click += new System.EventHandler(this.probeDown_Click);
             // 
-            // balCalButton
-            // 
-            this.balCalButton.Location = new System.Drawing.Point(1016, 17);
-            this.balCalButton.Name = "balCalButton";
-            this.balCalButton.Size = new System.Drawing.Size(154, 23);
-            this.balCalButton.TabIndex = 17;
-            this.balCalButton.Text = "Balance Calibration";
-            this.balCalButton.UseVisualStyleBackColor = true;
-            this.balCalButton.Click += new System.EventHandler(this.balCalButton_Click);
-            // 
             // stopValue
             // 
-            this.stopValue.Location = new System.Drawing.Point(1070, 46);
+            this.stopValue.Location = new System.Drawing.Point(461, 321);
             this.stopValue.Name = "stopValue";
             this.stopValue.Size = new System.Drawing.Size(100, 20);
             this.stopValue.TabIndex = 18;
@@ -183,7 +177,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(1005, 49);
+            this.label1.Location = new System.Drawing.Point(396, 324);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(59, 13);
             this.label1.TabIndex = 19;
@@ -192,7 +186,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(965, 75);
+            this.label2.Location = new System.Drawing.Point(356, 350);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(99, 13);
             this.label2.TabIndex = 20;
@@ -200,7 +194,7 @@
             // 
             // readingDelay
             // 
-            this.readingDelay.Location = new System.Drawing.Point(1070, 72);
+            this.readingDelay.Location = new System.Drawing.Point(461, 347);
             this.readingDelay.Name = "readingDelay";
             this.readingDelay.Size = new System.Drawing.Size(100, 20);
             this.readingDelay.TabIndex = 21;
@@ -209,7 +203,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(991, 101);
+            this.label3.Location = new System.Drawing.Point(382, 376);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(73, 13);
             this.label3.TabIndex = 22;
@@ -217,7 +211,7 @@
             // 
             // stepSize
             // 
-            this.stepSize.Location = new System.Drawing.Point(1070, 98);
+            this.stepSize.Location = new System.Drawing.Point(461, 373);
             this.stepSize.Name = "stepSize";
             this.stepSize.Size = new System.Drawing.Size(100, 20);
             this.stepSize.TabIndex = 23;
@@ -226,7 +220,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(954, 127);
+            this.label4.Location = new System.Drawing.Point(345, 402);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(110, 13);
             this.label4.TabIndex = 24;
@@ -234,7 +228,7 @@
             // 
             // outFile
             // 
-            this.outFile.Location = new System.Drawing.Point(1070, 124);
+            this.outFile.Location = new System.Drawing.Point(461, 399);
             this.outFile.Name = "outFile";
             this.outFile.Size = new System.Drawing.Size(100, 20);
             this.outFile.TabIndex = 25;
@@ -242,7 +236,7 @@
             // 
             // bcCal
             // 
-            this.bcCal.Location = new System.Drawing.Point(1001, 150);
+            this.bcCal.Location = new System.Drawing.Point(793, 353);
             this.bcCal.Name = "bcCal";
             this.bcCal.Size = new System.Drawing.Size(169, 23);
             this.bcCal.TabIndex = 26;
@@ -252,7 +246,7 @@
             // 
             // XYStepBar
             // 
-            this.XYStepBar.Location = new System.Drawing.Point(12, 427);
+            this.XYStepBar.Location = new System.Drawing.Point(12, 390);
             this.XYStepBar.Maximum = 100000;
             this.XYStepBar.Minimum = 1;
             this.XYStepBar.Name = "XYStepBar";
@@ -264,7 +258,7 @@
             // stepSizeLabel
             // 
             this.stepSizeLabel.AutoSize = true;
-            this.stepSizeLabel.Location = new System.Drawing.Point(124, 459);
+            this.stepSizeLabel.Location = new System.Drawing.Point(124, 422);
             this.stepSizeLabel.Name = "stepSizeLabel";
             this.stepSizeLabel.Size = new System.Drawing.Size(58, 13);
             this.stepSizeLabel.TabIndex = 28;
@@ -273,7 +267,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(25, 475);
+            this.label5.Location = new System.Drawing.Point(25, 438);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(89, 13);
             this.label5.TabIndex = 29;
@@ -282,7 +276,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(25, 488);
+            this.label6.Location = new System.Drawing.Point(25, 451);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(69, 13);
             this.label6.TabIndex = 30;
@@ -290,12 +284,11 @@
             // 
             // verticalStepBar
             // 
-            this.verticalStepBar.Location = new System.Drawing.Point(344, 12);
+            this.verticalStepBar.Location = new System.Drawing.Point(12, 479);
             this.verticalStepBar.Maximum = 28275;
             this.verticalStepBar.Minimum = 1;
             this.verticalStepBar.Name = "verticalStepBar";
-            this.verticalStepBar.Orientation = System.Windows.Forms.Orientation.Vertical;
-            this.verticalStepBar.Size = new System.Drawing.Size(45, 228);
+            this.verticalStepBar.Size = new System.Drawing.Size(326, 45);
             this.verticalStepBar.TabIndex = 31;
             this.verticalStepBar.Value = 1;
             this.verticalStepBar.Scroll += new System.EventHandler(this.verticalStepBar_Scroll);
@@ -304,7 +297,7 @@
             // 
             this.verticalStepLabel.AutoSize = true;
             this.verticalStepLabel.BackColor = System.Drawing.SystemColors.Control;
-            this.verticalStepLabel.Location = new System.Drawing.Point(397, 17);
+            this.verticalStepLabel.Location = new System.Drawing.Point(79, 523);
             this.verticalStepLabel.Name = "verticalStepLabel";
             this.verticalStepLabel.Size = new System.Drawing.Size(93, 13);
             this.verticalStepLabel.TabIndex = 32;
@@ -313,7 +306,7 @@
             // assYOffLabel
             // 
             this.assYOffLabel.AutoSize = true;
-            this.assYOffLabel.Location = new System.Drawing.Point(954, 256);
+            this.assYOffLabel.Location = new System.Drawing.Point(794, 394);
             this.assYOffLabel.Name = "assYOffLabel";
             this.assYOffLabel.Size = new System.Drawing.Size(34, 13);
             this.assYOffLabel.TabIndex = 33;
@@ -322,7 +315,7 @@
             // assXOffLabel
             // 
             this.assXOffLabel.AutoSize = true;
-            this.assXOffLabel.Location = new System.Drawing.Point(953, 243);
+            this.assXOffLabel.Location = new System.Drawing.Point(793, 381);
             this.assXOffLabel.Name = "assXOffLabel";
             this.assXOffLabel.Size = new System.Drawing.Size(34, 13);
             this.assXOffLabel.TabIndex = 34;
@@ -331,7 +324,7 @@
             // actXOffLabel
             // 
             this.actXOffLabel.AutoSize = true;
-            this.actXOffLabel.Location = new System.Drawing.Point(953, 288);
+            this.actXOffLabel.Location = new System.Drawing.Point(793, 426);
             this.actXOffLabel.Name = "actXOffLabel";
             this.actXOffLabel.Size = new System.Drawing.Size(33, 13);
             this.actXOffLabel.TabIndex = 35;
@@ -340,7 +333,7 @@
             // actYOffLabel
             // 
             this.actYOffLabel.AutoSize = true;
-            this.actYOffLabel.Location = new System.Drawing.Point(954, 301);
+            this.actYOffLabel.Location = new System.Drawing.Point(794, 439);
             this.actYOffLabel.Name = "actYOffLabel";
             this.actYOffLabel.Size = new System.Drawing.Size(33, 13);
             this.actYOffLabel.TabIndex = 36;
@@ -348,7 +341,7 @@
             // 
             // calButton
             // 
-            this.calButton.Location = new System.Drawing.Point(957, 341);
+            this.calButton.Location = new System.Drawing.Point(797, 479);
             this.calButton.Name = "calButton";
             this.calButton.Size = new System.Drawing.Size(75, 23);
             this.calButton.TabIndex = 37;
@@ -358,7 +351,7 @@
             // 
             // setButton
             // 
-            this.setButton.Location = new System.Drawing.Point(1070, 341);
+            this.setButton.Location = new System.Drawing.Point(910, 479);
             this.setButton.Name = "setButton";
             this.setButton.Size = new System.Drawing.Size(75, 23);
             this.setButton.TabIndex = 39;
@@ -368,7 +361,7 @@
             // 
             // backtrackButton
             // 
-            this.backtrackButton.Location = new System.Drawing.Point(956, 370);
+            this.backtrackButton.Location = new System.Drawing.Point(796, 508);
             this.backtrackButton.Name = "backtrackButton";
             this.backtrackButton.Size = new System.Drawing.Size(75, 23);
             this.backtrackButton.TabIndex = 40;
@@ -382,21 +375,72 @@
             this.forceDisplacementChart.ChartAreas.Add(chartArea1);
             legend1.Name = "Legend1";
             this.forceDisplacementChart.Legends.Add(legend1);
-            this.forceDisplacementChart.Location = new System.Drawing.Point(536, 17);
+            this.forceDisplacementChart.Location = new System.Drawing.Point(354, 12);
             this.forceDisplacementChart.Name = "forceDisplacementChart";
             series1.ChartArea = "ChartArea1";
             series1.Legend = "Legend1";
             series1.Name = "Series1";
             this.forceDisplacementChart.Series.Add(series1);
-            this.forceDisplacementChart.Size = new System.Drawing.Size(411, 300);
+            this.forceDisplacementChart.Size = new System.Drawing.Size(608, 300);
             this.forceDisplacementChart.TabIndex = 41;
             this.forceDisplacementChart.Text = "chart1";
+            // 
+            // runButton
+            // 
+            this.runButton.Location = new System.Drawing.Point(465, 479);
+            this.runButton.Name = "runButton";
+            this.runButton.Size = new System.Drawing.Size(75, 23);
+            this.runButton.TabIndex = 42;
+            this.runButton.Text = "Run Test";
+            this.runButton.UseVisualStyleBackColor = true;
+            this.runButton.Click += new System.EventHandler(this.runButton_Click);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(462, 452);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(74, 13);
+            this.label7.TabIndex = 43;
+            this.label7.Text = "Stop Voltage: ";
+            // 
+            // stopVoltageText
+            // 
+            this.stopVoltageText.Location = new System.Drawing.Point(542, 449);
+            this.stopVoltageText.Name = "stopVoltageText";
+            this.stopVoltageText.Size = new System.Drawing.Size(100, 20);
+            this.stopVoltageText.TabIndex = 44;
+            // 
+            // testPosition
+            // 
+            this.testPosition.Location = new System.Drawing.Point(546, 479);
+            this.testPosition.Name = "testPosition";
+            this.testPosition.Size = new System.Drawing.Size(117, 23);
+            this.testPosition.TabIndex = 45;
+            this.testPosition.Text = "Move To Test Pos";
+            this.testPosition.UseVisualStyleBackColor = true;
+            this.testPosition.Click += new System.EventHandler(this.testPosition_Click);
+            // 
+            // stopButton
+            // 
+            this.stopButton.Location = new System.Drawing.Point(515, 513);
+            this.stopButton.Name = "stopButton";
+            this.stopButton.Size = new System.Drawing.Size(75, 23);
+            this.stopButton.TabIndex = 46;
+            this.stopButton.Text = "Stop Test";
+            this.stopButton.UseVisualStyleBackColor = true;
+            this.stopButton.Click += new System.EventHandler(this.stopButton_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1182, 514);
+            this.ClientSize = new System.Drawing.Size(997, 585);
+            this.Controls.Add(this.stopButton);
+            this.Controls.Add(this.testPosition);
+            this.Controls.Add(this.stopVoltageText);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.runButton);
             this.Controls.Add(this.forceDisplacementChart);
             this.Controls.Add(this.backtrackButton);
             this.Controls.Add(this.setButton);
@@ -420,7 +464,6 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.stopValue);
-            this.Controls.Add(this.balCalButton);
             this.Controls.Add(this.probeDown);
             this.Controls.Add(this.probeUp);
             this.Controls.Add(this.lblZoomPercent);
@@ -454,7 +497,6 @@
         private System.Windows.Forms.Label lblZoomPercent;
         private System.Windows.Forms.Button probeUp;
         private System.Windows.Forms.Button probeDown;
-        private System.Windows.Forms.Button balCalButton;
         private System.Windows.Forms.TextBox stopValue;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
@@ -478,6 +520,11 @@
         private System.Windows.Forms.Button setButton;
         private System.Windows.Forms.Button backtrackButton;
         private System.Windows.Forms.DataVisualization.Charting.Chart forceDisplacementChart;
+        private System.Windows.Forms.Button runButton;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox stopVoltageText;
+        private System.Windows.Forms.Button testPosition;
+        private System.Windows.Forms.Button stopButton;
     }
 }
 

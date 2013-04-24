@@ -15,13 +15,16 @@ namespace MFDMInterface
     {
         private StageController MovementController;
         private CalibrationUtility CalUtill;
-        private Int32 CurrentOffset;
+        private TestingUtility TestUtil;
+
+        delegate void UpdateGraphCallback(float displacement, float voltage);
 
         public Form1()
         {
             InitializeComponent();
             MovementController = new StageController();
             CalUtill = new CalibrationUtility(MovementController, "COM6", "COM3"); //THIS IS THE LINE (Move...roller, Balance, Keithley)
+            TestUtil = new TestingUtility(MovementController, "COM3");
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -34,7 +37,7 @@ namespace MFDMInterface
             MovementController.ResetMovement();
 
             verticalStepLabel.Text = "Vertical Step Size: " + verticalStepBar.Value + " (en)";
-            stepSizeLabel.Text = "Step Size: " + XYStepBar.Value + " (en)";
+            stepSizeLabel.Text = "Horizontal Step Size: " + XYStepBar.Value + " (en)";
 
             forceDisplacementChart.Series[0].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
 
@@ -69,8 +72,13 @@ namespace MFDMInterface
 
         public void UpdateGraph(float displacement, float voltage)
         {
-            forceDisplacementChart.Series[0].Points.AddXY(displacement, voltage);
-            Console.WriteLine("Delegate Called");
+            if (this.forceDisplacementChart.InvokeRequired) {
+                UpdateGraphCallback d = new UpdateGraphCallback(UpdateGraph);
+                this.Invoke(d, new object[] {displacement, voltage});
+            } else {
+                float force = -0.69f * voltage + .09f;
+                forceDisplacementChart.Series[0].Points.AddXY(displacement, force);
+            }
         }
 
         private void LeftButton_Click(object sender, EventArgs e)
@@ -146,14 +154,12 @@ namespace MFDMInterface
             MovementController.ZNegative(verticalStepBar.Value);
         }
 
-        private void balCalButton_Click(object sender, EventArgs e)
-        {
-            CalUtill.GenerateBalanceCalibrationData(float.Parse(stopValue.Text), int.Parse(readingDelay.Text), int.Parse(stepSize.Text), outFile.Text);
-        }
-
         private void bcCal_Click(object sender, EventArgs e)
         {
+            CalUtill.OpenPorts();
+            forceDisplacementChart.Series[0].Points.Clear();
             CalUtill.GenerateBalanceKeithleyCalibrationData(new CalibrationUtility.DataUpdateDelegate(UpdateGraph), float.Parse(stopValue.Text), int.Parse(readingDelay.Text), int.Parse(stepSize.Text), outFile.Text);
+            CalUtill.ClosePorts();
         }
 
         private void verticalStepBar_Scroll(object sender, EventArgs e)
@@ -182,6 +188,23 @@ namespace MFDMInterface
         {
             MovementController.XPositive(-CalUtill.XOffset);
             MovementController.YPositive(-CalUtill.YOffset);
+        }
+
+        private void runButton_Click(object sender, EventArgs e)
+        {
+            TestUtil.OpenPort();
+            forceDisplacementChart.Series[0].Points.Clear();
+            TestUtil.RunTest(new TestingUtility.DataUpdateDelegate(UpdateGraph), float.Parse(stopVoltageText.Text), int.Parse(readingDelay.Text), int.Parse(stepSize.Text), outFile.Text);
+        }
+
+        private void testPosition_Click(object sender, EventArgs e)
+        {
+            TestUtil.MoveToTestPosition(CalUtill.XOffset, CalUtill.YOffset);
+        }
+
+        private void stopButton_Click(object sender, EventArgs e)
+        {
+            TestingUtility.KeepRunningTest = false;
         }
 
     }

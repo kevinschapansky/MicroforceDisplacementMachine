@@ -33,17 +33,12 @@ namespace MFDMInterface
             BalancePort.StopBits = StopBits.One;
             BalancePort.Handshake = Handshake.None;
 
-            BalancePort.Open();
-
             KeithleyPort = new SerialPort(keithleyPort);
             KeithleyPort.BaudRate = 19200;
             KeithleyPort.Parity = Parity.None;
             KeithleyPort.DataBits = 8;
             KeithleyPort.StopBits = StopBits.One;
             KeithleyPort.Handshake = Handshake.None;
-
-            KeithleyPort.Open();
-            SetupKeithley();
         }
 
         public void SetupKeithley()
@@ -58,6 +53,19 @@ namespace MFDMInterface
             KeithleyPort.Write(":FORM:ELEM VOLT\r");
             KeithleyPort.Write(":OUTP ON\r");
             KeithleyPort.Write(":READ?\r");
+        }
+
+        public void OpenPorts()
+        {
+            KeithleyPort.Open();
+            SetupKeithley();
+            BalancePort.Open();
+        }
+
+        public void ClosePorts()
+        {
+            KeithleyPort.Close();
+            BalancePort.Close();
         }
 
         public void GenerateBalanceKeithleyCalibrationData(DataUpdateDelegate graphUpdate, float stopValue, int readingDelay, int stepSize, string outFile)
@@ -91,38 +99,8 @@ namespace MFDMInterface
                 curPressure = float.Parse(result, System.Globalization.CultureInfo.InvariantCulture);
                 KeithleyPort.Write(":READ?\r");
                 strVolt = KeithleyPort.ReadLine();
-                file.WriteLine(curPressure + "," + strVolt);
+                file.Write(curPressure + "," + strVolt);
                 graphUpdate(displacement, float.Parse(strVolt, System.Globalization.CultureInfo.InvariantCulture));
-            } while (curPressure <= stopValue);
-            file.Close();
-        }
-
-        public void GenerateBalanceCalibrationData(float stopValue, int readingDelay, int stepSize, string outFile)
-        {
-            float curPressure;
-            char[] splitChars = { ' ' };
-            string result;
-            string[] splitResult;
-            System.IO.StreamWriter file = new System.IO.StreamWriter(@"C:\Users\microfab\Desktop\" + outFile);
-
-            do
-            {
-                MovementController.ZNegative(stepSize);
-                System.Threading.Thread.Sleep(readingDelay);
-                BalancePort.Write("!KP\r");
-                result = BalancePort.ReadLine();
-                splitResult = result.Split(splitChars);
-
-                foreach (string str in splitResult)
-                {
-                    if (str.Contains('.'))
-                    {
-                        result = str;
-                        break;
-                    }
-                }
-                curPressure = float.Parse(result, System.Globalization.CultureInfo.InvariantCulture);
-                file.WriteLine(curPressure);
             } while (curPressure <= stopValue);
             file.Close();
         }
