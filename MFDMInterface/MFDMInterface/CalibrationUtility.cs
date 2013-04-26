@@ -5,19 +5,77 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO.Ports;
 using System.IO;
+using System.Threading;
 
 namespace MFDMInterface
 {
     class CalibrationUtility
     {
-        private StageController MovementController;
-        private SerialPort BalancePort;
-        private SerialPort KeithleyPort;
+        private static StageController MovementController;
+        private static SerialPort BalancePort;
+        private static SerialPort KeithleyPort;
+        public static Boolean KeepRunningTest;
 
         public int XOffset;
         public int YOffset;
 
         public delegate void DataUpdateDelegate(float displacement, float voltage);
+
+        private class CalibrationRunner
+        {
+            private DataUpdateDelegate GraphUpdate;
+            private float StopValue;
+            private int ReadingDelay;
+            private int StepSize;
+            private string OutFile;
+
+            public CalibrationRunner(DataUpdateDelegate graphUpdate, float stopVoltage, int readingDelay, int stepSize, string outFile)
+            {
+                GraphUpdate = graphUpdate;
+                StopValue = stopVoltage;
+                ReadingDelay = readingDelay;
+                StepSize = stepSize;
+                OutFile = outFile;
+            }
+
+            public void RunTest()
+            {
+                float curPressure;
+                char[] splitChars = { ' ' };
+                string result;
+                string[] splitResult;
+                float displacement = 0;
+                string strVolt;
+
+                System.IO.StreamWriter file = new System.IO.StreamWriter(@"C:\Users\microfab\Desktop\" + OutFile);
+
+                do
+                {
+                    MovementController.ZNegative(StepSize);
+                    displacement += StepSize;
+                    System.Threading.Thread.Sleep(ReadingDelay);
+                    BalancePort.Write("!KP\r");
+                    result = BalancePort.ReadLine();
+                    splitResult = result.Split(splitChars);
+
+                    foreach (string str in splitResult)
+                    {
+                        if (str.Contains('.'))
+                        {
+                            result = str;
+                            break;
+                        }
+                    }
+                    curPressure = float.Parse(result, System.Globalization.CultureInfo.InvariantCulture);
+                    KeithleyPort.Write(":READ?\r");
+                    strVolt = KeithleyPort.ReadLine();
+                    file.Write(curPressure + "," + strVolt);
+                } while (curPressure <= StopValue);
+                file.Close();
+                KeithleyPort.Close();
+                BalancePort.Close();
+            }
+        }
 
         public CalibrationUtility(StageController stageCont, string balancePort, string keithleyPort)
         {
@@ -70,39 +128,11 @@ namespace MFDMInterface
 
         public void GenerateBalanceKeithleyCalibrationData(DataUpdateDelegate graphUpdate, float stopValue, int readingDelay, int stepSize, string outFile)
         {
-            float curPressure;
-            char[] splitChars = { ' ' };
-            string result;
-            string[] splitResult;
-            float displacement = 0;
-            string strVolt;
-            
-            System.IO.StreamWriter file = new System.IO.StreamWriter(@"C:\Users\microfab\Desktop\" + outFile);
+            CalibrationRunner runner = new CalibrationRunner(graphUpdate, stopValue, readingDelay, stepSize, outFile);
+            Thread tThread = new Thread(new ThreadStart(runner.RunTest));
 
-            do
-            {
-                MovementController.ZNegative(stepSize);
-                displacement += stepSize;
-                System.Threading.Thread.Sleep(readingDelay);
-                BalancePort.Write("!KP\r");
-                result = BalancePort.ReadLine();
-                splitResult = result.Split(splitChars);
-
-                foreach (string str in splitResult)
-                {
-                    if (str.Contains('.'))
-                    {
-                        result = str;
-                        break;
-                    }
-                }
-                curPressure = float.Parse(result, System.Globalization.CultureInfo.InvariantCulture);
-                KeithleyPort.Write(":READ?\r");
-                strVolt = KeithleyPort.ReadLine();
-                file.Write(curPressure + "," + strVolt);
-                graphUpdate(displacement, float.Parse(strVolt, System.Globalization.CultureInfo.InvariantCulture));
-            } while (curPressure <= stopValue);
-            file.Close();
+            KeepRunningTest = true;
+            tThread.Start();
         }
     }
 }

@@ -32,6 +32,9 @@ namespace MFDMInterface
             assXOffLabel.Text = "Assumed X Offset: " + CalUtill.XOffset + " (en)";
             assYOffLabel.Text = "Assumed Y Offset: " + CalUtill.YOffset + " (en)";
 
+            forceLabel.Text = "Force: -- (mg)";
+            voltageLabel.Text = "Voltage: -- (v)";
+
             actXOffLabel.DataBindings.Add(new Binding("Text", MovementController, "FormattedXMovement"));
             actYOffLabel.DataBindings.Add(new Binding("Text", MovementController, "FormattedYMovement"));
             MovementController.ResetMovement();
@@ -40,6 +43,9 @@ namespace MFDMInterface
             stepSizeLabel.Text = "Horizontal Step Size: " + XYStepBar.Value + " (en)";
 
             forceDisplacementChart.Series[0].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            forceDisplacementChart.Series[0].Name = "Force vs. Displacement";
+            forceDisplacementChart.ChartAreas[0].AxisX.Title = "Displacement (en)";
+            forceDisplacementChart.ChartAreas[0].AxisY.Title = "Force (mg)";
 
             if (!icImagingControl1.DeviceValid)
             {
@@ -76,8 +82,10 @@ namespace MFDMInterface
                 UpdateGraphCallback d = new UpdateGraphCallback(UpdateGraph);
                 this.Invoke(d, new object[] {displacement, voltage});
             } else {
-                float force = -0.69f * voltage + .09f;
+                float force = -0.69f * voltage + .09f; //*********************************** FORCE EQUATION ******************************************\\
                 forceDisplacementChart.Series[0].Points.AddXY(displacement, force);
+                forceLabel.Text = "Force: " + force.ToString("n4") + " (mg)";
+                voltageLabel.Text = "Voltage: " + voltage.ToString("n4") + " (v)";
             }
         }
 
@@ -159,7 +167,6 @@ namespace MFDMInterface
             CalUtill.OpenPorts();
             forceDisplacementChart.Series[0].Points.Clear();
             CalUtill.GenerateBalanceKeithleyCalibrationData(new CalibrationUtility.DataUpdateDelegate(UpdateGraph), float.Parse(stopValue.Text), int.Parse(readingDelay.Text), int.Parse(stepSize.Text), outFile.Text);
-            CalUtill.ClosePorts();
         }
 
         private void verticalStepBar_Scroll(object sender, EventArgs e)
@@ -205,6 +212,9 @@ namespace MFDMInterface
         private void stopButton_Click(object sender, EventArgs e)
         {
             TestingUtility.KeepRunningTest = false;
+            CalibrationUtility.KeepRunningTest = false;
+            forceLabel.Text = "Force: -- (mg)";
+            voltageLabel.Text = "Voltage: -- (v)";
         }
 
     }
