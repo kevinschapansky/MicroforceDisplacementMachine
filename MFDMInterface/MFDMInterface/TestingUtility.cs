@@ -40,7 +40,7 @@ namespace MFDMInterface
                 string strVolt;
 
                 System.IO.StreamWriter file = new System.IO.StreamWriter(@"C:\Users\microfab\Desktop\" + OutFile);
-                file.Write("Stop Voltage: " + StopVoltage + " (v) Reading Delay: " + ReadingDelay + " (ms) Step Size: " + StepSize + " (en)\n");
+                file.Write("Date: " + DateTime.UtcNow + " Stop Voltage: " + StopVoltage + " (v) Reading Delay: " + ReadingDelay + " (ms) Step Size: " + StepSize + " (en)\n");
 
                 do
                 {
